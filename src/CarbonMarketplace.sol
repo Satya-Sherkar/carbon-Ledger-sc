@@ -34,7 +34,7 @@ contract CarbonMarketplace is Ownable {
     ///////////////////////////////////////////////////*/
 
     /**
-     * 
+     *
      * @param ADMIN is set as owner of this marketplace contract..
      * @notice Owner of CarbonCreditToken is initialized as this contract(Marketplace).
      */
@@ -93,18 +93,9 @@ contract CarbonMarketplace is Ownable {
     event AuditorRemoved(address auditor);
     event ProjectRegistered(uint256 indexed projectId, address owner);
     event ProjectVerified(uint256 indexed id, uint256 credits, address auditor);
-    event CreditsListed(
-        uint256 indexed listingId,
-        address indexed seller,
-        uint256 amount,
-        uint256 pricePerCredit
-    );
+    event CreditsListed(uint256 indexed listingId, address indexed seller, uint256 amount, uint256 pricePerCredit);
     event CreditsPurchased(
-        uint256 listingId,
-        address indexed buyer,
-        address indexed seller,
-        uint256 creditAmount,
-        uint256 price
+        uint256 listingId, address indexed buyer, address indexed seller, uint256 creditAmount, uint256 price
     );
     event ProceedsWithdrawn(address indexed seller, uint256 indexed amount);
 
@@ -135,28 +126,17 @@ contract CarbonMarketplace is Ownable {
         return auditors[_auditor];
     }
 
-    function registerProject(
-        string calldata projectName,
-        address projectOwner
-    ) external {
+    function registerProject(string calldata projectName, address projectOwner) external {
         if (projectOwner == address(0)) {
             revert InvalidAddress();
         }
-        projects[nextProjectId] = Project({
-            projectId: nextProjectId,
-            name: projectName,
-            owner: projectOwner,
-            isVerified: false,
-            credits: 0
-        });
+        projects[nextProjectId] =
+            Project({projectId: nextProjectId, name: projectName, owner: projectOwner, isVerified: false, credits: 0});
         emit ProjectRegistered(nextProjectId, projectOwner);
         nextProjectId++;
     }
 
-    function verifyProject(
-        uint256 projectId,
-        uint256 credits
-    ) external onlyAuditor {
+    function verifyProject(uint256 projectId, uint256 credits) external onlyAuditor {
         Project storage project = projects[projectId];
         if (project.isVerified) revert ProjectAlreadyVerified();
 
@@ -168,10 +148,7 @@ contract CarbonMarketplace is Ownable {
     }
 
     // Functions for List/sell and buy credits
-    function listCreditsForSell(
-        uint256 creditAmount,
-        uint256 pricePerCredit
-    ) external {
+    function listCreditsForSell(uint256 creditAmount, uint256 pricePerCredit) external {
         if (creditAmount == 0) {
             revert InvalidAmount();
         }
@@ -185,19 +162,10 @@ contract CarbonMarketplace is Ownable {
         carbonCreditToken.approve_(msg.sender, address(this), creditAmount);
         carbonCreditToken.transferFrom(msg.sender, address(this), creditAmount);
 
-        Listings[nextListingId] = Listing({
-            credits: creditAmount,
-            seller: msg.sender,
-            pricePerCredit: pricePerCredit * 1e18,
-            isActive: true
-        });
+        Listings[nextListingId] =
+            Listing({credits: creditAmount, seller: msg.sender, pricePerCredit: pricePerCredit * 1e18, isActive: true});
 
-        emit CreditsListed(
-            nextListingId,
-            msg.sender,
-            creditAmount,
-            pricePerCredit
-        );
+        emit CreditsListed(nextListingId, msg.sender, creditAmount, pricePerCredit);
         nextListingId++;
     }
 
@@ -223,20 +191,14 @@ contract CarbonMarketplace is Ownable {
             payable(msg.sender).transfer(msg.value - totalPrice);
         }
 
-        emit CreditsPurchased(
-            listingId,
-            msg.sender,
-            listing.seller,
-            listing.credits,
-            totalPrice
-        );
+        emit CreditsPurchased(listingId, msg.sender, listing.seller, listing.credits, totalPrice);
     }
 
     function withdrawProceeds() external {
         uint256 proceeds = sellerProceeds[msg.sender];
         if (proceeds == 0) revert NoProceedsToWithdraw();
 
-        (bool success, ) = payable(msg.sender).call{value: proceeds}("");
+        (bool success,) = payable(msg.sender).call{value: proceeds}("");
         if (!success) revert WithdrawFailed();
 
         sellerProceeds[msg.sender] = 0;
@@ -245,9 +207,7 @@ contract CarbonMarketplace is Ownable {
     }
 
     function withdrawCharges() external onlyOwner {
-        (bool callSuccess, ) = payable(msg.sender).call{
-            value: address(this).balance
-        }("");
+        (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         // require(callSuccess, "Call Failed!");
         if (!callSuccess) revert WithdrawFailed();
     }

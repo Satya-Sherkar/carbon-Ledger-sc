@@ -78,13 +78,8 @@ contract CarbonMarketplaceTest is Test {
     function testRegisterProject() public {
         vm.prank(projectOwner);
         marketplace.registerProject("Project X", projectOwner);
-        (
-            uint256 projectId,
-            string memory name,
-            address ownerAddr,
-            bool verified,
-            uint256 credits
-        ) = marketplace.projects(0);
+        (uint256 projectId, string memory name, address ownerAddr, bool verified, uint256 credits) =
+            marketplace.projects(0);
         assertEq(projectId, 0);
         assertEq(name, "Project X");
         assertEq(ownerAddr, projectOwner);
@@ -102,7 +97,7 @@ contract CarbonMarketplaceTest is Test {
         vm.prank(auditor);
         marketplace.verifyProject(0, 100);
 
-        (, , , bool verified, uint256 credits) = marketplace.projects(0);
+        (,,, bool verified, uint256 credits) = marketplace.projects(0);
         assertTrue(verified);
         assertEq(credits, 100);
 
@@ -147,12 +142,7 @@ contract CarbonMarketplaceTest is Test {
         marketplace.listCreditsForSell(50, 1);
         vm.stopPrank();
 
-        (
-            uint256 credits,
-            address seller,
-            uint256 pricePerCredit,
-            bool isActive
-        ) = marketplace.Listings(0);
+        (uint256 credits, address seller, uint256 pricePerCredit, bool isActive) = marketplace.Listings(0);
         assertEq(credits, 50);
         assertEq(seller, address(user));
         assertEq(pricePerCredit, 1e18);
@@ -174,7 +164,6 @@ contract CarbonMarketplaceTest is Test {
         assertEq(token.balanceOf(buyer), 50);
         assertEq(marketplace.sellerProceeds(user), 50e18);
     }
-
 
     function testWitdrawProceeds() public projectListed {
         vm.deal(buyer, 100 ether);
