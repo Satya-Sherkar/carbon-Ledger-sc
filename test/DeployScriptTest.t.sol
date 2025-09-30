@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 import {DeployCarbonMarketplace} from "../script/DeployCarbonMarketplace.s.sol";
 import {CarbonMarketplace} from "../src/CarbonMarketplace.sol";
 
@@ -21,9 +21,9 @@ contract DeployScriptTest is Test {
 
     function testScriptDeploysMarketplaceAndToken() public view {
         address _marketplace = address(marketplace);
-        address _creditToken = address(marketplace.carbonCreditToken());
+        address _creditToken = address(marketplace.CARBON_CREDIT_TOKEN());
 
         assertEq(_marketplace, address(marketplace));
-        assertEq(_creditToken, address(marketplace.carbonCreditToken()));
+        assertEq(_creditToken, address(marketplace.CARBON_CREDIT_TOKEN()));
     }
 }

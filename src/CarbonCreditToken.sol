@@ -10,16 +10,16 @@ contract CarbonCreditToken is ERC20 {
     error UnauthorizedAccount();
 
     // Immutable
-    address public immutable owner;
+    address public immutable OWNER;
 
     // Constructor
     constructor(address _owner) ERC20("Carbon Credit Token", "CCT") {
-        owner = _owner;
+        OWNER = _owner;
     }
 
     // Modifier
     modifier onlyOwner() {
-        if (msg.sender != owner) {
+        if (msg.sender != OWNER) {
             revert UnauthorizedAccount();
         }
         _;

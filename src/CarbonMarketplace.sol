@@ -23,11 +23,12 @@ contract CarbonMarketplace is Ownable {
     error InsufficientPayment();
     error NoProceedsToWithdraw();
     error WithdrawFailed();
+    error TransferFailed();
 
     /*//////////////////////////////////////////////////// 
                             Immutable
     ///////////////////////////////////////////////////*/
-    CarbonCreditToken public immutable carbonCreditToken;
+    CarbonCreditToken public immutable CARBON_CREDIT_TOKEN;
 
     /*//////////////////////////////////////////////////// 
                             Constructor
@@ -35,11 +36,11 @@ contract CarbonMarketplace is Ownable {
 
     /**
      *
-     * @param ADMIN is set as owner of this marketplace contract..
+     * @param admin is set as owner of this marketplace contract..
      * @notice Owner of CarbonCreditToken is initialized as this contract(Marketplace).
      */
-    constructor(address ADMIN) Ownable(ADMIN) {
-        carbonCreditToken = new CarbonCreditToken(address(this));
+    constructor(address admin) Ownable(admin) {
+        CARBON_CREDIT_TOKEN = new CarbonCreditToken(address(this));
     }
 
     /*//////////////////////////////////////////////////// 
@@ -78,7 +79,7 @@ contract CarbonMarketplace is Ownable {
     /**
      * @notice This mapping maps Listing to Listing Id.
      */
-    mapping(uint256 => Listing) public Listings;
+    mapping(uint256 => Listing) public listings;
     uint256 public nextListingId;
 
     /**
@@ -143,7 +144,7 @@ contract CarbonMarketplace is Ownable {
         project.isVerified = true;
         project.credits = credits;
 
-        carbonCreditToken.mint(project.owner, credits);
+        CARBON_CREDIT_TOKEN.mint(project.owner, credits);
         emit ProjectVerified(projectId, credits, msg.sender);
     }
 
@@ -155,14 +156,17 @@ contract CarbonMarketplace is Ownable {
         if (pricePerCredit == 0) {
             revert InvalidPrice();
         }
-        if (carbonCreditToken.balanceOf(msg.sender) < creditAmount) {
+        if (CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < creditAmount) {
             revert InsufficientBalance();
         }
 
-        carbonCreditToken.approve_(msg.sender, address(this), creditAmount);
-        carbonCreditToken.transferFrom(msg.sender, address(this), creditAmount);
+        CARBON_CREDIT_TOKEN.approve_(msg.sender, address(this), creditAmount);
+        bool success = CARBON_CREDIT_TOKEN.transferFrom(msg.sender, address(this), creditAmount);
+        if (!success) {
+            revert TransferFailed();
+        }
 
-        Listings[nextListingId] =
+        listings[nextListingId] =
             Listing({credits: creditAmount, seller: msg.sender, pricePerCredit: pricePerCredit * 1e18, isActive: true});
 
         emit CreditsListed(nextListingId, msg.sender, creditAmount, pricePerCredit);
@@ -170,7 +174,7 @@ contract CarbonMarketplace is Ownable {
     }
 
     function buyTokens(uint256 listingId) external payable {
-        Listing storage listing = Listings[listingId];
+        Listing storage listing = listings[listingId];
         if (!listing.isActive) {
             revert CreditSellingInactive();
         }
@@ -181,7 +185,10 @@ contract CarbonMarketplace is Ownable {
         }
 
         // Token transfer to buyer
-        carbonCreditToken.transfer(msg.sender, listing.credits);
+        bool success = CARBON_CREDIT_TOKEN.transfer(msg.sender, listing.credits);
+        if (!success) {
+            revert TransferFailed();
+        }
         sellerProceeds[listing.seller] += msg.value;
 
         listing.isActive = false;

@@ -23,7 +23,7 @@ contract CarbonMarketplaceTest is Test {
 
     function setUp() public {
         marketplace = new CarbonMarketplace(owner);
-        token = marketplace.carbonCreditToken();
+        token = marketplace.CARBON_CREDIT_TOKEN();
         vm.prank(owner);
         marketplace.addAuditor(auditor);
     }
@@ -55,7 +55,7 @@ contract CarbonMarketplaceTest is Test {
     }
 
     function testTokenOwnerIsMarketplace() public view {
-        address tokenOwner = marketplace.carbonCreditToken().owner();
+        address tokenOwner = marketplace.CARBON_CREDIT_TOKEN().OWNER();
         assertEq(address(marketplace), tokenOwner);
     }
 
@@ -142,7 +142,7 @@ contract CarbonMarketplaceTest is Test {
         marketplace.listCreditsForSell(50, 1);
         vm.stopPrank();
 
-        (uint256 credits, address seller, uint256 pricePerCredit, bool isActive) = marketplace.Listings(0);
+        (uint256 credits, address seller, uint256 pricePerCredit, bool isActive) = marketplace.listings(0);
         assertEq(credits, 50);
         assertEq(seller, address(user));
         assertEq(pricePerCredit, 1e18);
