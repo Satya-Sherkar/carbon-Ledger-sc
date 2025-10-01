@@ -24,6 +24,7 @@ contract CarbonMarketplace is Ownable {
     error NoProceedsToWithdraw();
     error WithdrawFailed();
     error TransferFailed();
+    error InvalidOwener();
 
     /*//////////////////////////////////////////////////// 
                             Immutable
@@ -90,15 +91,18 @@ contract CarbonMarketplace is Ownable {
     /*//////////////////////////////////////////////////// 
                             Events
     ///////////////////////////////////////////////////*/
-    event AuditorAdded(address auditor);
-    event AuditorRemoved(address auditor);
-    event ProjectRegistered(uint256 indexed projectId, address owner);
-    event ProjectVerified(uint256 indexed id, uint256 credits, address auditor);
-    event CreditsListed(uint256 indexed listingId, address indexed seller, uint256 amount, uint256 pricePerCredit);
+    event AuditorAdded(address indexed auditor);
+    event AuditorRemoved(address indexed auditor);
+    event ProjectRegistered(uint256 indexed projectId, address indexed owner);
+    event ProjectVerified(uint256 indexed id, uint256 indexed credits, address indexed auditor);
+    event CreditsListed(
+        uint256 indexed listingId, address indexed seller, uint256 amount, uint256 indexed pricePerCredit
+    );
     event CreditsPurchased(
-        uint256 listingId, address indexed buyer, address indexed seller, uint256 creditAmount, uint256 price
+        uint256 indexed listingId, address indexed buyer, address indexed seller, uint256 creditAmount, uint256 price
     );
     event ProceedsWithdrawn(address indexed seller, uint256 indexed amount);
+    event CreditsRetired(address indexed creditHolder, uint256 indexed retiredCreditAmount);
 
     /*//////////////////////////////////////////////////// 
                             Modifiers
@@ -111,7 +115,7 @@ contract CarbonMarketplace is Ownable {
     }
 
     /*//////////////////////////////////////////////////// 
-                        External functions
+                     Functions
     ///////////////////////////////////////////////////*/
     function addAuditor(address auditor) external onlyOwner {
         auditors[auditor] = true;
@@ -173,6 +177,38 @@ contract CarbonMarketplace is Ownable {
         nextListingId++;
     }
 
+    function haltSelling(uint256 listingId) external {
+        Listing storage listing = listings[listingId];
+        if (msg.sender != listing.seller) {
+            revert InvalidOwener();
+        }
+        listing.isActive = false;
+    }
+
+    function resumeSelling(uint256 listingId) external {
+        Listing storage listing = listings[listingId];
+        if (msg.sender != listing.seller) {
+            revert InvalidOwener();
+        }
+        listing.isActive = true;
+    }
+
+    function cancelListing(uint256 listingId) external {
+        Listing storage listing = listings[listingId];
+        if (msg.sender != listing.seller) {
+            revert InvalidOwener();
+        }
+        
+        bool success = CARBON_CREDIT_TOKEN.transfer(msg.sender, listing.credits);
+        if (!success) {
+            revert TransferFailed();
+        }
+
+        listing.isActive = false;
+        listing.credits = 0;
+        listing.pricePerCredit = 0;
+    }
+
     function buyTokens(uint256 listingId) external payable {
         Listing storage listing = listings[listingId];
         if (!listing.isActive) {
@@ -209,13 +245,20 @@ contract CarbonMarketplace is Ownable {
         if (!success) revert WithdrawFailed();
 
         sellerProceeds[msg.sender] = 0;
-
         emit ProceedsWithdrawn(msg.sender, proceeds);
+    }
+
+    function retireCredit(uint256 amount) external {
+        if (CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < amount) {
+            revert InsufficientBalance();
+        }
+
+        CARBON_CREDIT_TOKEN.burn(msg.sender, amount);
+        emit CreditsRetired(msg.sender, amount);
     }
 
     function withdrawCharges() external onlyOwner {
         (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
-        // require(callSuccess, "Call Failed!");
         if (!callSuccess) revert WithdrawFailed();
     }
 }
