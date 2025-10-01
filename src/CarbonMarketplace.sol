@@ -198,7 +198,7 @@ contract CarbonMarketplace is Ownable {
         if (msg.sender != listing.seller) {
             revert InvalidOwener();
         }
-        
+
         bool success = CARBON_CREDIT_TOKEN.transfer(msg.sender, listing.credits);
         if (!success) {
             revert TransferFailed();
