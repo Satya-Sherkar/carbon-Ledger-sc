@@ -10,6 +10,8 @@ error ProjectAlreadyVerified();
 error InvalidAmount();
 error InvalidPrice();
 error CreditSellingInactive();
+error InsufficientBalance();
+error NoProceedsToWithdraw();
 
 contract CarbonMarketplaceTest is Test {
     CarbonMarketplace marketplace;
@@ -29,23 +31,22 @@ contract CarbonMarketplaceTest is Test {
     }
 
     modifier tokenMinted() {
-        vm.prank(user);
-        marketplace.registerProject("Demo", user);
+        vm.prank(projectOwner);
+        marketplace.registerProject("Demo", projectOwner);
         vm.prank(auditor);
         marketplace.verifyProject(0, 100);
         _;
     }
 
     modifier projectListed() {
-        vm.prank(user);
-        marketplace.registerProject("Demo", user);
+        vm.prank(projectOwner);
+        marketplace.registerProject("Demo", projectOwner);
         vm.prank(auditor);
         marketplace.verifyProject(0, 50);
 
         // User lists credits for sale
-        vm.startPrank(user);
+        vm.prank(projectOwner);
         marketplace.listCreditsForSell(50, 1);
-        vm.stopPrank();
         _;
     }
 
@@ -80,6 +81,7 @@ contract CarbonMarketplaceTest is Test {
         marketplace.registerProject("Project X", projectOwner);
         (uint256 projectId, string memory name, address ownerAddr, bool verified, uint256 credits) =
             marketplace.projects(0);
+
         assertEq(projectId, 0);
         assertEq(name, "Project X");
         assertEq(ownerAddr, projectOwner);
@@ -131,18 +133,17 @@ contract CarbonMarketplaceTest is Test {
     }
 
     function testListCreditsForSell() public {
-        // Register and verify project, so user receives tokens
         vm.prank(user);
         marketplace.registerProject("Demo", user);
         vm.prank(auditor);
         marketplace.verifyProject(0, 50);
 
         // User lists credits for sale
-        vm.startPrank(user);
+        vm.prank(user);
         marketplace.listCreditsForSell(50, 1);
-        vm.stopPrank();
 
         (uint256 credits, address seller, uint256 pricePerCredit, bool isActive) = marketplace.listings(0);
+
         assertEq(credits, 50);
         assertEq(seller, address(user));
         assertEq(pricePerCredit, 1e18);
@@ -157,12 +158,25 @@ contract CarbonMarketplaceTest is Test {
         marketplace.listCreditsForSell(0, 0);
     }
 
+    function testListingFailsWithInvalidPrice() public tokenMinted {
+        vm.startPrank(user);
+        vm.expectRevert(InvalidPrice.selector);
+        marketplace.listCreditsForSell(20, 0);
+    }
+
+    function testListingFailsWithInsufficientBalance() public tokenMinted {
+        vm.startPrank(user);
+        vm.expectRevert(InsufficientBalance.selector);
+        marketplace.listCreditsForSell(2000, 10);
+    }
+
     function testBuyCredit() public projectListed {
         vm.deal(buyer, 100 ether);
         vm.prank(buyer);
         marketplace.buyTokens{value: 50e18}(0);
+
         assertEq(token.balanceOf(buyer), 50);
-        assertEq(marketplace.sellerProceeds(user), 50e18);
+        assertEq(marketplace.sellerProceeds(projectOwner), 50e18);
     }
 
     function testWitdrawProceeds() public projectListed {
@@ -170,9 +184,15 @@ contract CarbonMarketplaceTest is Test {
         vm.prank(buyer);
         marketplace.buyTokens{value: 50e18}(0);
 
-        vm.prank(user);
+        vm.prank(projectOwner);
         marketplace.withdrawProceeds();
-        assertEq(user.balance, 50e18);
+        assertEq(projectOwner.balance, 50e18);
+    }
+
+    function testWitdrawProceedsFailsWithInsufficientProceeds() public projectListed {
+        vm.prank(projectOwner);
+        vm.expectRevert(NoProceedsToWithdraw.selector);
+        marketplace.withdrawProceeds();
     }
 
     function testWithdrawCharges() public {
@@ -181,5 +201,22 @@ contract CarbonMarketplaceTest is Test {
         vm.prank(owner);
         marketplace.withdrawCharges();
         assertEq(owner.balance, 100);
+    }
+
+    function testRetireCredit() public projectListed {
+        vm.deal(buyer, 100 ether);
+        vm.prank(buyer);
+        marketplace.buyTokens{value: 50e18}(0);
+
+        vm.prank(buyer);
+        marketplace.retireCredit(50);
+
+        assertEq(token.balanceOf(buyer), 0);
+    }
+
+    function testRetireFailsWithInvalidBalance() public {
+        vm.prank(user);
+        vm.expectRevert(InsufficientBalance.selector);
+        marketplace.retireCredit(200);
     }
 }
