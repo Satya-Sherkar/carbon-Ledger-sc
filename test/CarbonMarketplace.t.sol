@@ -219,4 +219,34 @@ contract CarbonMarketplaceTest is Test {
         vm.expectRevert(InsufficientBalance.selector);
         marketplace.retireCredit(200);
     }
+
+    function testGetAllListingReturnsAllListings() public projectListed {
+        // Create second project and listing
+        vm.prank(user);
+        marketplace.registerProject("Second Project", user);
+        vm.prank(auditor);
+        marketplace.verifyProject(1, 30);
+
+        // List second batch of credits
+        vm.prank(user);
+        marketplace.listCreditsForSell(30, 2);
+
+        // Get all listings
+        CarbonMarketplace.Listing[] memory allListings = marketplace.getAllListings();
+
+        // Assert array length
+        assertEq(allListings.length, 2);
+
+        // Verify first listing details
+        assertEq(allListings[0].credits, 50);
+        assertEq(allListings[0].seller, projectOwner);
+        assertEq(allListings[0].pricePerCredit, 1e18);
+        assertTrue(allListings[0].isActive);
+
+        // Verify second listing details
+        assertEq(allListings[1].credits, 30);
+        assertEq(allListings[1].seller, user);
+        assertEq(allListings[1].pricePerCredit, 2e18);
+        assertTrue(allListings[1].isActive);
+    }
 }

@@ -10,7 +10,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  * @notice This is Test contract.
  */
 contract CarbonMarketplace is Ownable {
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                             Errors
     ///////////////////////////////////////////////////*/
     error NotAuditor();
@@ -26,12 +26,12 @@ contract CarbonMarketplace is Ownable {
     error TransferFailed();
     error InvalidOwener();
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                             Immutable
     ///////////////////////////////////////////////////*/
     CarbonCreditToken public immutable CARBON_CREDIT_TOKEN;
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                             Constructor
     ///////////////////////////////////////////////////*/
 
@@ -44,7 +44,7 @@ contract CarbonMarketplace is Ownable {
         CARBON_CREDIT_TOKEN = new CarbonCreditToken(address(this));
     }
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                          Type Declarations
     ///////////////////////////////////////////////////*/
     struct Project {
@@ -62,7 +62,7 @@ contract CarbonMarketplace is Ownable {
         bool isActive;
     }
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                     Mappings and variables
     ///////////////////////////////////////////////////*/
 
@@ -88,7 +88,7 @@ contract CarbonMarketplace is Ownable {
      */
     mapping(address => uint256) public sellerProceeds;
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                             Events
     ///////////////////////////////////////////////////*/
     event AuditorAdded(address indexed auditor);
@@ -104,7 +104,7 @@ contract CarbonMarketplace is Ownable {
     event ProceedsWithdrawn(address indexed seller, uint256 indexed amount);
     event CreditsRetired(address indexed creditHolder, uint256 indexed retiredCreditAmount);
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                             Modifiers
     ///////////////////////////////////////////////////*/
     modifier onlyAuditor() {
@@ -114,7 +114,7 @@ contract CarbonMarketplace is Ownable {
         _;
     }
 
-    /*//////////////////////////////////////////////////// 
+    /*////////////////////////////////////////////////////
                      Functions
     ///////////////////////////////////////////////////*/
     function addAuditor(address auditor) external onlyOwner {
@@ -260,5 +260,19 @@ contract CarbonMarketplace is Ownable {
     function withdrawCharges() external onlyOwner {
         (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         if (!callSuccess) revert WithdrawFailed();
+    }
+
+    /*////////////////////////////////////////////////////
+                    Getter Functions
+    ///////////////////////////////////////////////////*/
+
+    function getAllListings() external view returns (Listing[] memory) {
+        Listing[] memory allListings = new Listing[](nextListingId);
+
+        for (uint256 i = 0; i < nextListingId; i++) {
+            allListings[i] = listings[i];
+        }
+
+        return allListings;
     }
 }
