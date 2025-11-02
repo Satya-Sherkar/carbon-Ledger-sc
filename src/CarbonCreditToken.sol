@@ -32,10 +32,14 @@ contract CarbonCreditToken is ERC20 {
      * @notice Restricts function access to contract owner
      */
     modifier onlyOwner() {
+        _onlyOwner();
+        _;
+    }
+
+    function _onlyOwner() internal view {
         if (msg.sender != OWNER) {
             revert UnauthorizedAccount();
         }
-        _;
     }
 
     /**
@@ -63,7 +67,11 @@ contract CarbonCreditToken is ERC20 {
     /**
      * @notice Approves spending of tokens on behalf of a holder, use for sending tokens for listing in marketplace contract.
      */
-    function approve_(address holder, address spender, uint256 value) external onlyOwner {
+    function approve_(
+        address holder,
+        address spender,
+        uint256 value
+    ) external onlyOwner {
         _approve(holder, spender, value);
     }
 }
