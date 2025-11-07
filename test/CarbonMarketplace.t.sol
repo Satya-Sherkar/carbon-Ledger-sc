@@ -249,4 +249,66 @@ contract CarbonMarketplaceTest is Test {
         assertEq(allListings[1].pricePerCredit, 2e18);
         assertTrue(allListings[1].isActive);
     }
+
+    function testGetAllProjects() public {
+        // Create first project
+        vm.prank(projectOwner);
+        marketplace.registerProject("Project 1", projectOwner);
+
+        // Create second project
+        vm.prank(user);
+        marketplace.registerProject("Project 2", user);
+
+        CarbonMarketplace.Project[] memory projects = marketplace.getAllProjects();
+
+        assertEq(projects.length, 2);
+        assertEq(projects[0].name, "Project 1");
+        assertEq(projects[0].owner, projectOwner);
+        assertEq(projects[1].name, "Project 2");
+        assertEq(projects[1].owner, user);
+    }
+
+    function testGetSellerProceedsNonZero() public projectListed {
+        // Buy tokens to generate proceeds
+        vm.deal(buyer, 100 ether);
+        vm.prank(buyer);
+        marketplace.buyTokens{value: 50e18}(0);
+
+        // Check seller proceeds
+        vm.prank(projectOwner);
+        assertEq(marketplace.getSellerProceeds(), 50e18);
+    }
+
+    function testGetNextProjectIdStartsAtZero() public {
+        assertEq(marketplace.getNextProjectId(), 0);
+    }
+
+    function testGetNextProjectIdIncrements() public {
+        vm.prank(projectOwner);
+        marketplace.registerProject("Test Project", projectOwner);
+        assertEq(marketplace.getNextProjectId(), 1);
+
+        vm.prank(projectOwner);
+        marketplace.registerProject("Test Project 2", projectOwner);
+        assertEq(marketplace.getNextProjectId(), 2);
+    }
+
+    function testGetNextListingIdStartsAtZero() public {
+        assertEq(marketplace.getNextListingId(), 0);
+    }
+
+    function testGetNextListingIdIncrements() public tokenMinted {
+        vm.startPrank(projectOwner);
+        marketplace.listCreditsForSell(50, 1);
+        assertEq(marketplace.getNextListingId(), 1);
+
+        marketplace.listCreditsForSell(50, 2);
+        assertEq(marketplace.getNextListingId(), 2);
+        vm.stopPrank();
+    }
+
+    function testGetAllProjectsEmpty() public {
+        CarbonMarketplace.Project[] memory projects = marketplace.getAllProjects();
+        assertEq(projects.length, 0);
+    }
 }

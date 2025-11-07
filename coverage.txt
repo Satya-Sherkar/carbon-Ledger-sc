@@ -1,0 +1,662 @@
+Compiling 32 files with Solc 0.8.30
+Solc 0.8.30 finished in 809.59ms
+Compiler run successful!
+Analysing contracts...
+Running tests...
+
+Ran 19 tests for test/CarbonMarketplace.t.sol:CarbonMarketplaceTest
+[PASS] testAddAndRemoveAuditor() (gas: 24774)
+[PASS] testBuyCredit() (gas: 328364)
+[PASS] testDoubleVerificationFails() (gas: 176314)
+[PASS] testGetAllListingReturnsAllListings() (gas: 523123)
+[PASS] testListCreditsForSell() (gas: 305107)
+[PASS] testListingFailsWithInsufficientBalance() (gas: 174242)
+[PASS] testListingFailsWithInvalidAmount() (gas: 170613)
+[PASS] testListingFailsWithInvalidPrice() (gas: 170590)
+[PASS] testMarketplaceAdmin() (gas: 10236)
+[PASS] testNonAuditorCannotVerify() (gas: 90836)
+[PASS] testRegisterProject() (gas: 92455)
+[PASS] testRetireCredit() (gas: 328201)
+[PASS] testRetireFailsWithInvalidBalance() (gas: 17794)
+[PASS] testTokenOwnerIsMarketplace() (gas: 9797)
+[PASS] testVerifyProject() (gas: 189145)
+[PASS] testWitdrawProceeds() (gas: 346108)
+[PASS] testWitdrawProceedsFailsWithInsufficientProceeds() (gas: 301806)
+[PASS] testWithdrawCharges() (gas: 43782)
+[PASS] testZeroAddressCannotRegister() (gas: 12078)
+Suite result: ok. 19 passed; 0 failed; 0 skipped; finished in 8.86ms (27.81ms CPU time)
+
+Ran 7 tests for test/CarbonCreditToken.t.sol:CarbonCreditTokenTest
+[PASS] testBurnByAdmin() (gas: 50076)
+[PASS] testBurnFailsWithLessBalance() (gas: 16320)
+[PASS] testInitialSupplyToBeZero() (gas: 7955)
+[PASS] testMintByAdmin() (gas: 62322)
+[PASS] testMintFailsByNonOwner() (gas: 12056)
+[PASS] testMintFailsToAddressZero() (gas: 11896)
+[PASS] testTokenNameAndSymbol() (gas: 15374)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 8.93ms (5.62ms CPU time)
+
+Ran 2 tests for test/DeployScriptTest.t.sol:DeployScriptTest
+[PASS] testAdminAddress() (gas: 8048)
+[PASS] testScriptDeploysMarketplaceAndToken() (gas: 7716)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 8.63ms (2.73ms CPU time)
+
+Ran 3 test suites in 56.33ms (26.42ms CPU time): 28 tests passed, 0 failed, 0 skipped (28 total tests)
+script/DeployCarbonMarketplace.s.sol:
+- Line (location: (source ID: 26, lines: 10..16, bytes: 282..496), hits: 2) -> "function run() external returns ...       return marketplace;\n    }"
+- Function "run" (location: (source ID: 26, lines: 10..16, bytes: 282..496), hits: 2) -> "function run() external returns ...       return marketplace;\n    }"
+- Line (location: (source ID: 26, lines: 11..12, bytes: 344..363), hits: 2) -> "vm.startBroadcast()"
+- Statement (location: (source ID: 26, lines: 11..12, bytes: 344..363), hits: 2) -> "vm.startBroadcast()"
+- Line (location: (source ID: 26, lines: 12..13, bytes: 373..433), hits: 2) -> "CarbonMarketplace marketplace = new CarbonMarketplace(admin)"
+- Statement (location: (source ID: 26, lines: 12..13, bytes: 373..433), hits: 2) -> "CarbonMarketplace marketplace = new CarbonMarketplace(admin)"
+- Statement (location: (source ID: 26, lines: 12..13, bytes: 405..433), hits: 2) -> "new CarbonMarketplace(admin)"
+- Line (location: (source ID: 26, lines: 13..14, bytes: 443..461), hits: 2) -> "vm.stopBroadcast()"
+- Statement (location: (source ID: 26, lines: 13..14, bytes: 443..461), hits: 2) -> "vm.stopBroadcast()"
+- Line (location: (source ID: 26, lines: 14..15, bytes: 471..489), hits: 2) -> "return marketplace"
+- Statement (location: (source ID: 26, lines: 14..15, bytes: 471..489), hits: 2) -> "return marketplace"
+
+src/CarbonCreditToken.sol:
+- Line (location: (source ID: 27, lines: 27..30, bytes: 897..990), hits: 28) -> "constructor(address owner) ERC20...) {\n        OWNER = owner;\n    }"
+- Function "constructor" (location: (source ID: 27, lines: 27..30, bytes: 897..990), hits: 28) -> "constructor(address owner) ERC20...) {\n        OWNER = owner;\n    }"
+- Line (location: (source ID: 27, lines: 28..29, bytes: 970..983), hits: 28) -> "OWNER = owner"
+- Statement (location: (source ID: 27, lines: 28..29, bytes: 970..983), hits: 28) -> "OWNER = owner"
+- Line (location: (source ID: 27, lines: 34..38, bytes: 1071..1132), hits: 16) -> "modifier onlyOwner() {\n        _onlyOwner();\n        _;\n    }"
+- Function "onlyOwner" (location: (source ID: 27, lines: 34..38, bytes: 1071..1132), hits: 16) -> "modifier onlyOwner() {\n        _onlyOwner();\n        _;\n    }"
+- Line (location: (source ID: 27, lines: 35..36, bytes: 1102..1114), hits: 16) -> "_onlyOwner()"
+- Statement (location: (source ID: 27, lines: 35..36, bytes: 1102..1114), hits: 16) -> "_onlyOwner()"
+- Line (location: (source ID: 27, lines: 39..44, bytes: 1138..1268), hits: 26) -> "function _onlyOwner() internal v...orizedAccount();\n        }\n    }"
+- Function "_onlyOwner" (location: (source ID: 27, lines: 39..44, bytes: 1138..1268), hits: 26) -> "function _onlyOwner() internal v...orizedAccount();\n        }\n    }"
+- Line (location: (source ID: 27, lines: 40..41, bytes: 1188..1207), hits: 26) -> "msg.sender != OWNER"
+- Statement (location: (source ID: 27, lines: 40..41, bytes: 1188..1207), hits: 26) -> "msg.sender != OWNER"
+- Branch (branch: 0, path: 0) (location: (source ID: 27, lines: 40..43, bytes: 1209..1262), hits: 1) -> "{\n            revert UnauthorizedAccount();\n        }"
+- Line (location: (source ID: 27, lines: 41..42, bytes: 1223..1251), hits: 1) -> "revert UnauthorizedAccount()"
+- Statement (location: (source ID: 27, lines: 41..42, bytes: 1223..1251), hits: 1) -> "revert UnauthorizedAccount()"
+- Line (location: (source ID: 27, lines: 48..54, bytes: 1345..1519), hits: 16) -> "function mint(address to, uint25...        _mint(to, amount);\n    }"
+- Function "mint" (location: (source ID: 27, lines: 48..54, bytes: 1345..1519), hits: 16) -> "function mint(address to, uint25...        _mint(to, amount);\n    }"
+- Line (location: (source ID: 27, lines: 49..50, bytes: 1420..1436), hits: 15) -> "to == address(0)"
+- Statement (location: (source ID: 27, lines: 49..50, bytes: 1420..1436), hits: 15) -> "to == address(0)"
+- Branch (branch: 1, path: 0) (location: (source ID: 27, lines: 49..52, bytes: 1438..1486), hits: 1) -> "{\n            revert InvalidAddress();\n        }"
+- Line (location: (source ID: 27, lines: 50..51, bytes: 1452..1475), hits: 1) -> "revert InvalidAddress()"
+- Statement (location: (source ID: 27, lines: 50..51, bytes: 1452..1475), hits: 1) -> "revert InvalidAddress()"
+- Line (location: (source ID: 27, lines: 52..53, bytes: 1495..1512), hits: 14) -> "_mint(to, amount)"
+- Statement (location: (source ID: 27, lines: 52..53, bytes: 1495..1512), hits: 14) -> "_mint(to, amount)"
+- Line (location: (source ID: 27, lines: 60..66, bytes: 1736..1933), hits: 3) -> "function burn(address holder, ui...    _burn(holder, amount);\n    }"
+- Function "burn" (location: (source ID: 27, lines: 60..66, bytes: 1736..1933), hits: 3) -> "function burn(address holder, ui...    _burn(holder, amount);\n    }"
+- Line (location: (source ID: 27, lines: 61..62, bytes: 1815..1841), hits: 3) -> "amount > balanceOf(holder)"
+- Statement (location: (source ID: 27, lines: 61..62, bytes: 1815..1841), hits: 3) -> "amount > balanceOf(holder)"
+- Statement (location: (source ID: 27, lines: 61..62, bytes: 1824..1841), hits: 3) -> "balanceOf(holder)"
+- Branch (branch: 2, path: 0) (location: (source ID: 27, lines: 61..64, bytes: 1843..1896), hits: 1) -> "{\n            revert InsufficientBalance();\n        }"
+- Line (location: (source ID: 27, lines: 62..63, bytes: 1857..1885), hits: 1) -> "revert InsufficientBalance()"
+- Statement (location: (source ID: 27, lines: 62..63, bytes: 1857..1885), hits: 1) -> "revert InsufficientBalance()"
+- Line (location: (source ID: 27, lines: 64..65, bytes: 1905..1926), hits: 2) -> "_burn(holder, amount)"
+- Statement (location: (source ID: 27, lines: 64..65, bytes: 1905..1926), hits: 2) -> "_burn(holder, amount)"
+- Line (location: (source ID: 27, lines: 70..73, bytes: 2081..2215), hits: 7) -> "function approve_(address holder...e(holder, spender, value);\n    }"
+- Function "approve_" (location: (source ID: 27, lines: 70..73, bytes: 2081..2215), hits: 7) -> "function approve_(address holder...e(holder, spender, value);\n    }"
+- Line (location: (source ID: 27, lines: 71..72, bytes: 2176..2208), hits: 7) -> "_approve(holder, spender, value)"
+- Statement (location: (source ID: 27, lines: 71..72, bytes: 2176..2208), hits: 7) -> "_approve(holder, spender, value)"
+
+src/CarbonMarketplace.sol:
+- Line (location: (source ID: 28, lines: 43..46, bytes: 1412..1529), hits: 21) -> "constructor(address admin) Ownab...reditToken(address(this));\n    }"
+- Function "constructor" (location: (source ID: 28, lines: 43..46, bytes: 1412..1529), hits: 21) -> "constructor(address admin) Ownab...reditToken(address(this));\n    }"
+- Line (location: (source ID: 28, lines: 44..45, bytes: 1464..1522), hits: 21) -> "CARBON_CREDIT_TOKEN = new CarbonCreditToken(address(this))"
+- Statement (location: (source ID: 28, lines: 44..45, bytes: 1464..1522), hits: 21) -> "CARBON_CREDIT_TOKEN = new CarbonCreditToken(address(this))"
+- Line (location: (source ID: 28, lines: 110..114, bytes: 3778..3843), hits: 14) -> "modifier onlyAuditor() {\n       ..._onlyAuditor();\n        _;\n    }"
+- Function "onlyAuditor" (location: (source ID: 28, lines: 110..114, bytes: 3778..3843), hits: 14) -> "modifier onlyAuditor() {\n       ..._onlyAuditor();\n        _;\n    }"
+- Line (location: (source ID: 28, lines: 111..112, bytes: 3811..3825), hits: 14) -> "_onlyAuditor()"
+- Statement (location: (source ID: 28, lines: 111..112, bytes: 3811..3825), hits: 14) -> "_onlyAuditor()"
+- Line (location: (source ID: 28, lines: 115..120, bytes: 3849..3974), hits: 14) -> "function _onlyAuditor() internal...rt NotAuditor();\n        }\n    }"
+- Function "_onlyAuditor" (location: (source ID: 28, lines: 115..120, bytes: 3849..3974), hits: 14) -> "function _onlyAuditor() internal...rt NotAuditor();\n        }\n    }"
+- Line (location: (source ID: 28, lines: 116..117, bytes: 3901..3922), hits: 14) -> "!auditors[msg.sender]"
+- Statement (location: (source ID: 28, lines: 116..117, bytes: 3901..3922), hits: 14) -> "!auditors[msg.sender]"
+- Branch (branch: 0, path: 0) (location: (source ID: 28, lines: 116..119, bytes: 3924..3968), hits: 1) -> "{\n            revert NotAuditor();\n        }"
+- Line (location: (source ID: 28, lines: 117..118, bytes: 3938..3957), hits: 1) -> "revert NotAuditor()"
+- Statement (location: (source ID: 28, lines: 117..118, bytes: 3938..3957), hits: 1) -> "revert NotAuditor()"
+- Line (location: (source ID: 28, lines: 124..128, bytes: 4128..4261), hits: 22) -> "function addAuditor(address audi...mit AuditorAdded(auditor);\n    }"
+- Function "addAuditor" (location: (source ID: 28, lines: 124..128, bytes: 4128..4261), hits: 22) -> "function addAuditor(address audi...mit AuditorAdded(auditor);\n    }"
+- Line (location: (source ID: 28, lines: 125..126, bytes: 4194..4218), hits: 22) -> "auditors[auditor] = true"
+- Statement (location: (source ID: 28, lines: 125..126, bytes: 4194..4218), hits: 22) -> "auditors[auditor] = true"
+- Line (location: (source ID: 28, lines: 126..127, bytes: 4228..4254), hits: 22) -> "emit AuditorAdded(auditor)"
+- Statement (location: (source ID: 28, lines: 126..127, bytes: 4228..4254), hits: 22) -> "emit AuditorAdded(auditor)"
+- Line (location: (source ID: 28, lines: 129..133, bytes: 4267..4406), hits: 1) -> "function removeAuditor(address a...t AuditorRemoved(auditor);\n    }"
+- Function "removeAuditor" (location: (source ID: 28, lines: 129..133, bytes: 4267..4406), hits: 1) -> "function removeAuditor(address a...t AuditorRemoved(auditor);\n    }"
+- Line (location: (source ID: 28, lines: 130..131, bytes: 4336..4361), hits: 1) -> "auditors[auditor] = false"
+- Statement (location: (source ID: 28, lines: 130..131, bytes: 4336..4361), hits: 1) -> "auditors[auditor] = false"
+- Line (location: (source ID: 28, lines: 131..132, bytes: 4371..4399), hits: 1) -> "emit AuditorRemoved(auditor)"
+- Statement (location: (source ID: 28, lines: 131..132, bytes: 4371..4399), hits: 1) -> "emit AuditorRemoved(auditor)"
+- Line (location: (source ID: 28, lines: 134..137, bytes: 4412..4520), hits: 2) -> "function isAuditor(address _audi...return auditors[_auditor];\n    }"
+- Function "isAuditor" (location: (source ID: 28, lines: 134..137, bytes: 4412..4520), hits: 2) -> "function isAuditor(address _audi...return auditors[_auditor];\n    }"
+- Line (location: (source ID: 28, lines: 135..136, bytes: 4488..4513), hits: 2) -> "return auditors[_auditor]"
+- Statement (location: (source ID: 28, lines: 135..136, bytes: 4488..4513), hits: 2) -> "return auditors[_auditor]"
+- Line (location: (source ID: 28, lines: 138..147, bytes: 4526..4947), hits: 15) -> "function registerProject(string ...;\n        nextProjectId++;\n    }"
+- Function "registerProject" (location: (source ID: 28, lines: 138..147, bytes: 4526..4947), hits: 15) -> "function registerProject(string ...;\n        nextProjectId++;\n    }"
+- Line (location: (source ID: 28, lines: 139..140, bytes: 4625..4651), hits: 15) -> "projectOwner == address(0)"
+- Statement (location: (source ID: 28, lines: 139..140, bytes: 4625..4651), hits: 15) -> "projectOwner == address(0)"
+- Branch (branch: 1, path: 0) (location: (source ID: 28, lines: 139..142, bytes: 4653..4701), hits: 1) -> "{\n            revert InvalidAddress();\n        }"
+- Line (location: (source ID: 28, lines: 140..141, bytes: 4667..4690), hits: 1) -> "revert InvalidAddress()"
+- Statement (location: (source ID: 28, lines: 140..141, bytes: 4667..4690), hits: 1) -> "revert InvalidAddress()"
+- Line (location: (source ID: 28, lines: 142..144, bytes: 4710..4854), hits: 14) -> "projects[nextProjectId] =\n      ... isVerified: false, credits: 0})"
+- Statement (location: (source ID: 28, lines: 142..144, bytes: 4710..4854), hits: 14) -> "projects[nextProjectId] =\n      ... isVerified: false, credits: 0})"
+- Line (location: (source ID: 28, lines: 144..145, bytes: 4864..4915), hits: 14) -> "emit ProjectRegistered(nextProjectId, projectOwner)"
+- Statement (location: (source ID: 28, lines: 144..145, bytes: 4864..4915), hits: 14) -> "emit ProjectRegistered(nextProjectId, projectOwner)"
+- Line (location: (source ID: 28, lines: 145..146, bytes: 4925..4940), hits: 14) -> "nextProjectId++"
+- Statement (location: (source ID: 28, lines: 145..146, bytes: 4925..4940), hits: 14) -> "nextProjectId++"
+- Line (location: (source ID: 28, lines: 148..158, bytes: 4953..5352), hits: 14) -> "function verifyProject(uint256 p...tId, credits, msg.sender);\n    }"
+- Function "verifyProject" (location: (source ID: 28, lines: 148..158, bytes: 4953..5352), hits: 14) -> "function verifyProject(uint256 p...tId, credits, msg.sender);\n    }"
+- Line (location: (source ID: 28, lines: 149..150, bytes: 5043..5088), hits: 13) -> "Project storage project = projects[projectId]"
+- Statement (location: (source ID: 28, lines: 149..150, bytes: 5043..5088), hits: 13) -> "Project storage project = projects[projectId]"
+- Line (location: (source ID: 28, lines: 150..151, bytes: 5122..5153), hits: 1) -> "revert ProjectAlreadyVerified()"
+- Statement (location: (source ID: 28, lines: 150..151, bytes: 5122..5153), hits: 1) -> "revert ProjectAlreadyVerified()"
+- Branch (branch: 2, path: 0) (location: (source ID: 28, lines: 150..151, bytes: 5122..5153), hits: 1) -> "revert ProjectAlreadyVerified()"
+- Line (location: (source ID: 28, lines: 152..153, bytes: 5164..5189), hits: 12) -> "project.isVerified = true"
+- Statement (location: (source ID: 28, lines: 152..153, bytes: 5164..5189), hits: 12) -> "project.isVerified = true"
+- Line (location: (source ID: 28, lines: 153..154, bytes: 5199..5224), hits: 12) -> "project.credits = credits"
+- Statement (location: (source ID: 28, lines: 153..154, bytes: 5199..5224), hits: 12) -> "project.credits = credits"
+- Line (location: (source ID: 28, lines: 155..156, bytes: 5235..5283), hits: 12) -> "CARBON_CREDIT_TOKEN.mint(project.owner, credits)"
+- Statement (location: (source ID: 28, lines: 155..156, bytes: 5235..5283), hits: 12) -> "CARBON_CREDIT_TOKEN.mint(project.owner, credits)"
+- Line (location: (source ID: 28, lines: 156..157, bytes: 5293..5345), hits: 12) -> "emit ProjectVerified(projectId, credits, msg.sender)"
+- Statement (location: (source ID: 28, lines: 156..157, bytes: 5293..5345), hits: 12) -> "emit ProjectVerified(projectId, credits, msg.sender)"
+- Line (location: (source ID: 28, lines: 160..183, bytes: 5405..6294), hits: 10) -> "function listCreditsForSell(uint...;\n        nextListingId++;\n    }"
+- Function "listCreditsForSell" (location: (source ID: 28, lines: 160..183, bytes: 5405..6294), hits: 10) -> "function listCreditsForSell(uint...;\n        nextListingId++;\n    }"
+- Line (location: (source ID: 28, lines: 161..162, bytes: 5502..5519), hits: 10) -> "creditAmount == 0"
+- Statement (location: (source ID: 28, lines: 161..162, bytes: 5502..5519), hits: 10) -> "creditAmount == 0"
+- Branch (branch: 3, path: 0) (location: (source ID: 28, lines: 161..164, bytes: 5521..5568), hits: 1) -> "{\n            revert InvalidAmount();\n        }"
+- Line (location: (source ID: 28, lines: 162..163, bytes: 5535..5557), hits: 1) -> "revert InvalidAmount()"
+- Statement (location: (source ID: 28, lines: 162..163, bytes: 5535..5557), hits: 1) -> "revert InvalidAmount()"
+- Line (location: (source ID: 28, lines: 164..165, bytes: 5581..5600), hits: 9) -> "pricePerCredit == 0"
+- Statement (location: (source ID: 28, lines: 164..165, bytes: 5581..5600), hits: 9) -> "pricePerCredit == 0"
+- Branch (branch: 4, path: 0) (location: (source ID: 28, lines: 164..167, bytes: 5602..5648), hits: 1) -> "{\n            revert InvalidPrice();\n        }"
+- Line (location: (source ID: 28, lines: 165..166, bytes: 5616..5637), hits: 1) -> "revert InvalidPrice()"
+- Statement (location: (source ID: 28, lines: 165..166, bytes: 5616..5637), hits: 1) -> "revert InvalidPrice()"
+- Line (location: (source ID: 28, lines: 167..168, bytes: 5661..5702), hits: 8) -> "CARBON_CREDIT_TOKEN.balanceOf(msg.sender)"
+- Statement (location: (source ID: 28, lines: 167..168, bytes: 5661..5702), hits: 8) -> "CARBON_CREDIT_TOKEN.balanceOf(msg.sender)"
+- Statement (location: (source ID: 28, lines: 167..168, bytes: 5661..5717), hits: 8) -> "CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < creditAmount"
+- Branch (branch: 5, path: 0) (location: (source ID: 28, lines: 167..170, bytes: 5719..5772), hits: 1) -> "{\n            revert InsufficientBalance();\n        }"
+- Line (location: (source ID: 28, lines: 168..169, bytes: 5733..5761), hits: 1) -> "revert InsufficientBalance()"
+- Statement (location: (source ID: 28, lines: 168..169, bytes: 5733..5761), hits: 1) -> "revert InsufficientBalance()"
+- Line (location: (source ID: 28, lines: 171..172, bytes: 5782..5851), hits: 7) -> "CARBON_CREDIT_TOKEN.approve_(msg...er, address(this), creditAmount)"
+- Statement (location: (source ID: 28, lines: 171..172, bytes: 5782..5851), hits: 7) -> "CARBON_CREDIT_TOKEN.approve_(msg...er, address(this), creditAmount)"
+- Line (location: (source ID: 28, lines: 172..173, bytes: 5861..5949), hits: 7) -> "bool success = CARBON_CREDIT_TOK...er, address(this), creditAmount)"
+- Statement (location: (source ID: 28, lines: 172..173, bytes: 5861..5949), hits: 7) -> "bool success = CARBON_CREDIT_TOK...er, address(this), creditAmount)"
+- Statement (location: (source ID: 28, lines: 172..173, bytes: 5876..5949), hits: 7) -> "CARBON_CREDIT_TOKEN.transferFrom...er, address(this), creditAmount)"
+- Line (location: (source ID: 28, lines: 173..174, bytes: 5963..5971), hits: 7) -> "!success"
+- Statement (location: (source ID: 28, lines: 173..174, bytes: 5963..5971), hits: 7) -> "!success"
+- Branch (branch: 6, path: 0) (location: (source ID: 28, lines: 173..176, bytes: 5973..6021), hits: 0) -> "{\n            revert TransferFailed();\n        }"
+- Line (location: (source ID: 28, lines: 174..175, bytes: 5987..6010), hits: 0) -> "revert TransferFailed()"
+- Statement (location: (source ID: 28, lines: 174..175, bytes: 5987..6010), hits: 0) -> "revert TransferFailed()"
+- Line (location: (source ID: 28, lines: 177..179, bytes: 6031..6176), hits: 7) -> "listings[nextListingId] =\n      ...rCredit * 1e18, isActive: true})"
+- Statement (location: (source ID: 28, lines: 177..179, bytes: 6031..6176), hits: 7) -> "listings[nextListingId] =\n      ...rCredit * 1e18, isActive: true})"
+- Line (location: (source ID: 28, lines: 180..181, bytes: 6187..6262), hits: 7) -> "emit CreditsListed(nextListingId...r, creditAmount, pricePerCredit)"
+- Statement (location: (source ID: 28, lines: 180..181, bytes: 6187..6262), hits: 7) -> "emit CreditsListed(nextListingId...r, creditAmount, pricePerCredit)"
+- Line (location: (source ID: 28, lines: 181..182, bytes: 6272..6287), hits: 7) -> "nextListingId++"
+- Statement (location: (source ID: 28, lines: 181..182, bytes: 6272..6287), hits: 7) -> "nextListingId++"
+- Line (location: (source ID: 28, lines: 184..191, bytes: 6300..6535), hits: 0) -> "function haltSelling(uint256 lis... listing.isActive = false;\n    }"
+- Function "haltSelling" (location: (source ID: 28, lines: 184..191, bytes: 6300..6535), hits: 0) -> "function haltSelling(uint256 lis... listing.isActive = false;\n    }"
+- Line (location: (source ID: 28, lines: 185..186, bytes: 6359..6404), hits: 0) -> "Listing storage listing = listings[listingId]"
+- Statement (location: (source ID: 28, lines: 185..186, bytes: 6359..6404), hits: 0) -> "Listing storage listing = listings[listingId]"
+- Line (location: (source ID: 28, lines: 186..187, bytes: 6418..6446), hits: 0) -> "msg.sender != listing.seller"
+- Statement (location: (source ID: 28, lines: 186..187, bytes: 6418..6446), hits: 0) -> "msg.sender != listing.seller"
+- Branch (branch: 7, path: 0) (location: (source ID: 28, lines: 186..189, bytes: 6448..6495), hits: 0) -> "{\n            revert InvalidOwener();\n        }"
+- Line (location: (source ID: 28, lines: 187..188, bytes: 6462..6484), hits: 0) -> "revert InvalidOwener()"
+- Statement (location: (source ID: 28, lines: 187..188, bytes: 6462..6484), hits: 0) -> "revert InvalidOwener()"
+- Line (location: (source ID: 28, lines: 189..190, bytes: 6504..6528), hits: 0) -> "listing.isActive = false"
+- Statement (location: (source ID: 28, lines: 189..190, bytes: 6504..6528), hits: 0) -> "listing.isActive = false"
+- Line (location: (source ID: 28, lines: 192..199, bytes: 6541..6777), hits: 0) -> "function resumeSelling(uint256 l...  listing.isActive = true;\n    }"
+- Function "resumeSelling" (location: (source ID: 28, lines: 192..199, bytes: 6541..6777), hits: 0) -> "function resumeSelling(uint256 l...  listing.isActive = true;\n    }"
+- Line (location: (source ID: 28, lines: 193..194, bytes: 6602..6647), hits: 0) -> "Listing storage listing = listings[listingId]"
+- Statement (location: (source ID: 28, lines: 193..194, bytes: 6602..6647), hits: 0) -> "Listing storage listing = listings[listingId]"
+- Line (location: (source ID: 28, lines: 194..195, bytes: 6661..6689), hits: 0) -> "msg.sender != listing.seller"
+- Statement (location: (source ID: 28, lines: 194..195, bytes: 6661..6689), hits: 0) -> "msg.sender != listing.seller"
+- Branch (branch: 8, path: 0) (location: (source ID: 28, lines: 194..197, bytes: 6691..6738), hits: 0) -> "{\n            revert InvalidOwener();\n        }"
+- Line (location: (source ID: 28, lines: 195..196, bytes: 6705..6727), hits: 0) -> "revert InvalidOwener()"
+- Statement (location: (source ID: 28, lines: 195..196, bytes: 6705..6727), hits: 0) -> "revert InvalidOwener()"
+- Line (location: (source ID: 28, lines: 197..198, bytes: 6747..6770), hits: 0) -> "listing.isActive = true"
+- Statement (location: (source ID: 28, lines: 197..198, bytes: 6747..6770), hits: 0) -> "listing.isActive = true"
+- Line (location: (source ID: 28, lines: 200..215, bytes: 6783..7240), hits: 0) -> "function cancelListing(uint256 l...isting.pricePerCredit = 0;\n    }"
+- Function "cancelListing" (location: (source ID: 28, lines: 200..215, bytes: 6783..7240), hits: 0) -> "function cancelListing(uint256 l...isting.pricePerCredit = 0;\n    }"
+- Line (location: (source ID: 28, lines: 201..202, bytes: 6844..6889), hits: 0) -> "Listing storage listing = listings[listingId]"
+- Statement (location: (source ID: 28, lines: 201..202, bytes: 6844..6889), hits: 0) -> "Listing storage listing = listings[listingId]"
+- Line (location: (source ID: 28, lines: 202..203, bytes: 6903..6931), hits: 0) -> "msg.sender != listing.seller"
+- Statement (location: (source ID: 28, lines: 202..203, bytes: 6903..6931), hits: 0) -> "msg.sender != listing.seller"
+- Branch (branch: 9, path: 0) (location: (source ID: 28, lines: 202..205, bytes: 6933..6980), hits: 0) -> "{\n            revert InvalidOwener();\n        }"
+- Line (location: (source ID: 28, lines: 203..204, bytes: 6947..6969), hits: 0) -> "revert InvalidOwener()"
+- Statement (location: (source ID: 28, lines: 203..204, bytes: 6947..6969), hits: 0) -> "revert InvalidOwener()"
+- Line (location: (source ID: 28, lines: 206..207, bytes: 6990..7062), hits: 0) -> "bool success = CARBON_CREDIT_TOK...fer(msg.sender, listing.credits)"
+- Statement (location: (source ID: 28, lines: 206..207, bytes: 6990..7062), hits: 0) -> "bool success = CARBON_CREDIT_TOK...fer(msg.sender, listing.credits)"
+- Statement (location: (source ID: 28, lines: 206..207, bytes: 7005..7062), hits: 0) -> "CARBON_CREDIT_TOKEN.transfer(msg.sender, listing.credits)"
+- Line (location: (source ID: 28, lines: 207..208, bytes: 7076..7084), hits: 0) -> "!success"
+- Statement (location: (source ID: 28, lines: 207..208, bytes: 7076..7084), hits: 0) -> "!success"
+- Branch (branch: 10, path: 0) (location: (source ID: 28, lines: 207..210, bytes: 7086..7134), hits: 0) -> "{\n            revert TransferFailed();\n        }"
+- Line (location: (source ID: 28, lines: 208..209, bytes: 7100..7123), hits: 0) -> "revert TransferFailed()"
+- Statement (location: (source ID: 28, lines: 208..209, bytes: 7100..7123), hits: 0) -> "revert TransferFailed()"
+- Line (location: (source ID: 28, lines: 211..212, bytes: 7144..7168), hits: 0) -> "listing.isActive = false"
+- Statement (location: (source ID: 28, lines: 211..212, bytes: 7144..7168), hits: 0) -> "listing.isActive = false"
+- Line (location: (source ID: 28, lines: 212..213, bytes: 7178..7197), hits: 0) -> "listing.credits = 0"
+- Statement (location: (source ID: 28, lines: 212..213, bytes: 7178..7197), hits: 0) -> "listing.credits = 0"
+- Line (location: (source ID: 28, lines: 213..214, bytes: 7207..7233), hits: 0) -> "listing.pricePerCredit = 0"
+- Statement (location: (source ID: 28, lines: 213..214, bytes: 7207..7233), hits: 0) -> "listing.pricePerCredit = 0"
+- Line (location: (source ID: 28, lines: 216..243, bytes: 7246..8137), hits: 3) -> "function buyTokens(uint256 listi...ting.credits, totalPrice);\n    }"
+- Function "buyTokens" (location: (source ID: 28, lines: 216..243, bytes: 7246..8137), hits: 3) -> "function buyTokens(uint256 listi...ting.credits, totalPrice);\n    }"
+- Line (location: (source ID: 28, lines: 217..218, bytes: 7311..7356), hits: 3) -> "Listing storage listing = listings[listingId]"
+- Statement (location: (source ID: 28, lines: 217..218, bytes: 7311..7356), hits: 3) -> "Listing storage listing = listings[listingId]"
+- Line (location: (source ID: 28, lines: 218..219, bytes: 7370..7387), hits: 3) -> "!listing.isActive"
+- Statement (location: (source ID: 28, lines: 218..219, bytes: 7370..7387), hits: 3) -> "!listing.isActive"
+- Branch (branch: 11, path: 0) (location: (source ID: 28, lines: 218..221, bytes: 7389..7444), hits: 0) -> "{\n            revert CreditSellingInactive();\n        }"
+- Line (location: (source ID: 28, lines: 219..220, bytes: 7403..7433), hits: 0) -> "revert CreditSellingInactive()"
+- Statement (location: (source ID: 28, lines: 219..220, bytes: 7403..7433), hits: 0) -> "revert CreditSellingInactive()"
+- Line (location: (source ID: 28, lines: 222..223, bytes: 7454..7515), hits: 3) -> "uint256 totalPrice = listing.credits * listing.pricePerCredit"
+- Statement (location: (source ID: 28, lines: 222..223, bytes: 7454..7515), hits: 3) -> "uint256 totalPrice = listing.credits * listing.pricePerCredit"
+- Statement (location: (source ID: 28, lines: 222..223, bytes: 7475..7515), hits: 3) -> "listing.credits * listing.pricePerCredit"
+- Line (location: (source ID: 28, lines: 223..224, bytes: 7529..7551), hits: 3) -> "msg.value < totalPrice"
+- Statement (location: (source ID: 28, lines: 223..224, bytes: 7529..7551), hits: 3) -> "msg.value < totalPrice"
+- Branch (branch: 12, path: 0) (location: (source ID: 28, lines: 223..226, bytes: 7553..7606), hits: 0) -> "{\n            revert InsufficientPayment();\n        }"
+- Line (location: (source ID: 28, lines: 224..225, bytes: 7567..7595), hits: 0) -> "revert InsufficientPayment()"
+- Statement (location: (source ID: 28, lines: 224..225, bytes: 7567..7595), hits: 0) -> "revert InsufficientPayment()"
+- Line (location: (source ID: 28, lines: 228..229, bytes: 7651..7723), hits: 3) -> "bool success = CARBON_CREDIT_TOK...fer(msg.sender, listing.credits)"
+- Statement (location: (source ID: 28, lines: 228..229, bytes: 7651..7723), hits: 3) -> "bool success = CARBON_CREDIT_TOK...fer(msg.sender, listing.credits)"
+- Statement (location: (source ID: 28, lines: 228..229, bytes: 7666..7723), hits: 3) -> "CARBON_CREDIT_TOKEN.transfer(msg.sender, listing.credits)"
+- Line (location: (source ID: 28, lines: 229..230, bytes: 7737..7745), hits: 3) -> "!success"
+- Statement (location: (source ID: 28, lines: 229..230, bytes: 7737..7745), hits: 3) -> "!success"
+- Branch (branch: 13, path: 0) (location: (source ID: 28, lines: 229..232, bytes: 7747..7795), hits: 0) -> "{\n            revert TransferFailed();\n        }"
+- Line (location: (source ID: 28, lines: 230..231, bytes: 7761..7784), hits: 0) -> "revert TransferFailed()"
+- Statement (location: (source ID: 28, lines: 230..231, bytes: 7761..7784), hits: 0) -> "revert TransferFailed()"
+- Line (location: (source ID: 28, lines: 232..233, bytes: 7804..7847), hits: 3) -> "sellerProceeds[listing.seller] += msg.value"
+- Statement (location: (source ID: 28, lines: 232..233, bytes: 7804..7847), hits: 3) -> "sellerProceeds[listing.seller] += msg.value"
+- Line (location: (source ID: 28, lines: 234..235, bytes: 7858..7882), hits: 3) -> "listing.isActive = false"
+- Statement (location: (source ID: 28, lines: 234..235, bytes: 7858..7882), hits: 3) -> "listing.isActive = false"
+- Line (location: (source ID: 28, lines: 237..238, bytes: 7930..7952), hits: 3) -> "msg.value > totalPrice"
+- Statement (location: (source ID: 28, lines: 237..238, bytes: 7930..7952), hits: 3) -> "msg.value > totalPrice"
+- Branch (branch: 14, path: 0) (location: (source ID: 28, lines: 237..240, bytes: 7954..8031), hits: 0) -> "{\n            payable(msg.sender...g.value - totalPrice);\n        }"
+- Line (location: (source ID: 28, lines: 238..239, bytes: 7968..8020), hits: 0) -> "payable(msg.sender).transfer(msg.value - totalPrice)"
+- Statement (location: (source ID: 28, lines: 238..239, bytes: 7968..8020), hits: 0) -> "payable(msg.sender).transfer(msg.value - totalPrice)"
+- Line (location: (source ID: 28, lines: 241..242, bytes: 8041..8130), hits: 3) -> "emit CreditsPurchased(listingId,...er, listing.credits, totalPrice)"
+- Statement (location: (source ID: 28, lines: 241..242, bytes: 8041..8130), hits: 3) -> "emit CreditsPurchased(listingId,...er, listing.credits, totalPrice)"
+- Line (location: (source ID: 28, lines: 244..254, bytes: 8143..8516), hits: 2) -> "function withdrawProceeds() exte...awn(msg.sender, proceeds);\n    }"
+- Function "withdrawProceeds" (location: (source ID: 28, lines: 244..254, bytes: 8143..8516), hits: 2) -> "function withdrawProceeds() exte...awn(msg.sender, proceeds);\n    }"
+- Line (location: (source ID: 28, lines: 245..246, bytes: 8190..8235), hits: 2) -> "uint256 proceeds = sellerProceeds[msg.sender]"
+- Statement (location: (source ID: 28, lines: 245..246, bytes: 8190..8235), hits: 2) -> "uint256 proceeds = sellerProceeds[msg.sender]"
+- Line (location: (source ID: 28, lines: 246..247, bytes: 8249..8262), hits: 2) -> "proceeds == 0"
+- Statement (location: (source ID: 28, lines: 246..247, bytes: 8249..8262), hits: 2) -> "proceeds == 0"
+- Statement (location: (source ID: 28, lines: 246..247, bytes: 8264..8293), hits: 1) -> "revert NoProceedsToWithdraw()"
+- Branch (branch: 15, path: 0) (location: (source ID: 28, lines: 246..247, bytes: 8264..8293), hits: 1) -> "revert NoProceedsToWithdraw()"
+- Line (location: (source ID: 28, lines: 248..249, bytes: 8304..8367), hits: 1) -> "(bool success,) = payable(msg.sender).call{value: proceeds}(\"\")"
+- Statement (location: (source ID: 28, lines: 248..249, bytes: 8304..8367), hits: 1) -> "(bool success,) = payable(msg.sender).call{value: proceeds}(\"\")"
+- Statement (location: (source ID: 28, lines: 248..249, bytes: 8322..8367), hits: 1) -> "payable(msg.sender).call{value: proceeds}(\"\")"
+- Line (location: (source ID: 28, lines: 249..250, bytes: 8381..8389), hits: 1) -> "!success"
+- Statement (location: (source ID: 28, lines: 249..250, bytes: 8381..8389), hits: 1) -> "!success"
+- Statement (location: (source ID: 28, lines: 249..250, bytes: 8391..8414), hits: 0) -> "revert WithdrawFailed()"
+- Branch (branch: 16, path: 0) (location: (source ID: 28, lines: 249..250, bytes: 8391..8414), hits: 0) -> "revert WithdrawFailed()"
+- Line (location: (source ID: 28, lines: 251..252, bytes: 8425..8455), hits: 1) -> "sellerProceeds[msg.sender] = 0"
+- Statement (location: (source ID: 28, lines: 251..252, bytes: 8425..8455), hits: 1) -> "sellerProceeds[msg.sender] = 0"
+- Line (location: (source ID: 28, lines: 252..253, bytes: 8465..8509), hits: 1) -> "emit ProceedsWithdrawn(msg.sender, proceeds)"
+- Statement (location: (source ID: 28, lines: 252..253, bytes: 8465..8509), hits: 1) -> "emit ProceedsWithdrawn(msg.sender, proceeds)"
+- Line (location: (source ID: 28, lines: 255..263, bytes: 8522..8798), hits: 2) -> "function retireCredit(uint256 am...tired(msg.sender, amount);\n    }"
+- Function "retireCredit" (location: (source ID: 28, lines: 255..263, bytes: 8522..8798), hits: 2) -> "function retireCredit(uint256 am...tired(msg.sender, amount);\n    }"
+- Line (location: (source ID: 28, lines: 256..257, bytes: 8583..8624), hits: 2) -> "CARBON_CREDIT_TOKEN.balanceOf(msg.sender)"
+- Statement (location: (source ID: 28, lines: 256..257, bytes: 8583..8624), hits: 2) -> "CARBON_CREDIT_TOKEN.balanceOf(msg.sender)"
+- Statement (location: (source ID: 28, lines: 256..257, bytes: 8583..8633), hits: 2) -> "CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < amount"
+- Branch (branch: 17, path: 0) (location: (source ID: 28, lines: 256..259, bytes: 8635..8688), hits: 1) -> "{\n            revert InsufficientBalance();\n        }"
+- Line (location: (source ID: 28, lines: 257..258, bytes: 8649..8677), hits: 1) -> "revert InsufficientBalance()"
+- Statement (location: (source ID: 28, lines: 257..258, bytes: 8649..8677), hits: 1) -> "revert InsufficientBalance()"
+- Line (location: (source ID: 28, lines: 260..261, bytes: 8698..8742), hits: 1) -> "CARBON_CREDIT_TOKEN.burn(msg.sender, amount)"
+- Statement (location: (source ID: 28, lines: 260..261, bytes: 8698..8742), hits: 1) -> "CARBON_CREDIT_TOKEN.burn(msg.sender, amount)"
+- Line (location: (source ID: 28, lines: 261..262, bytes: 8752..8791), hits: 1) -> "emit CreditsRetired(msg.sender, amount)"
+- Statement (location: (source ID: 28, lines: 261..262, bytes: 8752..8791), hits: 1) -> "emit CreditsRetired(msg.sender, amount)"
+- Line (location: (source ID: 28, lines: 264..268, bytes: 8804..8998), hits: 1) -> "function withdrawCharges() exter...) revert WithdrawFailed();\n    }"
+- Function "withdrawCharges" (location: (source ID: 28, lines: 264..268, bytes: 8804..8998), hits: 1) -> "function withdrawCharges() exter...) revert WithdrawFailed();\n    }"
+- Line (location: (source ID: 28, lines: 265..266, bytes: 8860..8940), hits: 1) -> "(bool callSuccess,) = payable(ms...alue: address(this).balance}(\"\")"
+- Statement (location: (source ID: 28, lines: 265..266, bytes: 8860..8940), hits: 1) -> "(bool callSuccess,) = payable(ms...alue: address(this).balance}(\"\")"
+- Statement (location: (source ID: 28, lines: 265..266, bytes: 8882..8940), hits: 1) -> "payable(msg.sender).call{value: address(this).balance}(\"\")"
+- Line (location: (source ID: 28, lines: 266..267, bytes: 8954..8966), hits: 1) -> "!callSuccess"
+- Statement (location: (source ID: 28, lines: 266..267, bytes: 8954..8966), hits: 1) -> "!callSuccess"
+- Statement (location: (source ID: 28, lines: 266..267, bytes: 8968..8991), hits: 0) -> "revert WithdrawFailed()"
+- Branch (branch: 18, path: 0) (location: (source ID: 28, lines: 266..267, bytes: 8968..8991), hits: 0) -> "revert WithdrawFailed()"
+- Line (location: (source ID: 28, lines: 273..282, bytes: 9159..9438), hits: 1) -> "function getAllListings() extern...       return allListings;\n    }"
+- Function "getAllListings" (location: (source ID: 28, lines: 273..282, bytes: 9159..9438), hits: 1) -> "function getAllListings() extern...       return allListings;\n    }"
+- Line (location: (source ID: 28, lines: 274..275, bytes: 9236..9295), hits: 1) -> "Listing[] memory allListings = new Listing[](nextListingId)"
+- Statement (location: (source ID: 28, lines: 274..275, bytes: 9236..9295), hits: 1) -> "Listing[] memory allListings = new Listing[](nextListingId)"
+- Statement (location: (source ID: 28, lines: 274..275, bytes: 9267..9295), hits: 1) -> "new Listing[](nextListingId)"
+- Line (location: (source ID: 28, lines: 276..277, bytes: 9311..9324), hits: 1) -> "uint256 i = 0"
+- Statement (location: (source ID: 28, lines: 276..277, bytes: 9311..9324), hits: 1) -> "uint256 i = 0"
+- Statement (location: (source ID: 28, lines: 276..277, bytes: 9326..9343), hits: 3) -> "i < nextListingId"
+- Statement (location: (source ID: 28, lines: 276..277, bytes: 9345..9348), hits: 2) -> "i++"
+- Line (location: (source ID: 28, lines: 277..278, bytes: 9364..9392), hits: 2) -> "allListings[i] = listings[i]"
+- Statement (location: (source ID: 28, lines: 277..278, bytes: 9364..9392), hits: 2) -> "allListings[i] = listings[i]"
+- Line (location: (source ID: 28, lines: 280..281, bytes: 9413..9431), hits: 1) -> "return allListings"
+- Statement (location: (source ID: 28, lines: 280..281, bytes: 9413..9431), hits: 1) -> "return allListings"
+- Line (location: (source ID: 28, lines: 283..292, bytes: 9444..9723), hits: 0) -> "function getAllProjects() extern...       return allProjects;\n    }"
+- Function "getAllProjects" (location: (source ID: 28, lines: 283..292, bytes: 9444..9723), hits: 0) -> "function getAllProjects() extern...       return allProjects;\n    }"
+- Line (location: (source ID: 28, lines: 284..285, bytes: 9521..9580), hits: 0) -> "Project[] memory allProjects = new Project[](nextProjectId)"
+- Statement (location: (source ID: 28, lines: 284..285, bytes: 9521..9580), hits: 0) -> "Project[] memory allProjects = new Project[](nextProjectId)"
+- Statement (location: (source ID: 28, lines: 284..285, bytes: 9552..9580), hits: 0) -> "new Project[](nextProjectId)"
+- Line (location: (source ID: 28, lines: 286..287, bytes: 9596..9609), hits: 0) -> "uint256 i = 0"
+- Statement (location: (source ID: 28, lines: 286..287, bytes: 9596..9609), hits: 0) -> "uint256 i = 0"
+- Statement (location: (source ID: 28, lines: 286..287, bytes: 9611..9628), hits: 0) -> "i < nextProjectId"
+- Statement (location: (source ID: 28, lines: 286..287, bytes: 9630..9633), hits: 0) -> "i++"
+- Line (location: (source ID: 28, lines: 287..288, bytes: 9649..9677), hits: 0) -> "allProjects[i] = projects[i]"
+- Statement (location: (source ID: 28, lines: 287..288, bytes: 9649..9677), hits: 0) -> "allProjects[i] = projects[i]"
+- Line (location: (source ID: 28, lines: 290..291, bytes: 9698..9716), hits: 0) -> "return allProjects"
+- Statement (location: (source ID: 28, lines: 290..291, bytes: 9698..9716), hits: 0) -> "return allProjects"
+- Line (location: (source ID: 28, lines: 293..297, bytes: 9729..9877), hits: 0) -> "function getSellerProceeds() ext...;\n        return proceeds;\n    }"
+- Function "getSellerProceeds" (location: (source ID: 28, lines: 293..297, bytes: 9729..9877), hits: 0) -> "function getSellerProceeds() ext...;\n        return proceeds;\n    }"
+- Line (location: (source ID: 28, lines: 294..295, bytes: 9800..9845), hits: 0) -> "uint256 proceeds = sellerProceeds[msg.sender]"
+- Statement (location: (source ID: 28, lines: 294..295, bytes: 9800..9845), hits: 0) -> "uint256 proceeds = sellerProceeds[msg.sender]"
+- Line (location: (source ID: 28, lines: 295..296, bytes: 9855..9870), hits: 0) -> "return proceeds"
+- Statement (location: (source ID: 28, lines: 295..296, bytes: 9855..9870), hits: 0) -> "return proceeds"
+- Line (location: (source ID: 28, lines: 298..301, bytes: 9883..9980), hits: 0) -> "function getNextProjectId() exte...     return nextProjectId;\n    }"
+- Function "getNextProjectId" (location: (source ID: 28, lines: 298..301, bytes: 9883..9980), hits: 0) -> "function getNextProjectId() exte...     return nextProjectId;\n    }"
+- Line (location: (source ID: 28, lines: 299..300, bytes: 9953..9973), hits: 0) -> "return nextProjectId"
+- Statement (location: (source ID: 28, lines: 299..300, bytes: 9953..9973), hits: 0) -> "return nextProjectId"
+- Line (location: (source ID: 28, lines: 302..305, bytes: 9986..10083), hits: 0) -> "function getNextListingId() exte...     return nextListingId;\n    }"
+- Function "getNextListingId" (location: (source ID: 28, lines: 302..305, bytes: 9986..10083), hits: 0) -> "function getNextListingId() exte...     return nextListingId;\n    }"
+- Line (location: (source ID: 28, lines: 303..304, bytes: 10056..10076), hits: 0) -> "return nextListingId"
+- Statement (location: (source ID: 28, lines: 303..304, bytes: 10056..10076), hits: 0) -> "return nextListingId"
+
+Anchors for Contract "CarbonMarketplace" (solc 0.8.30, source ID 28):
+- creation IC 5 -> Item 49: Line (location: (source ID: 28, lines: 43..46, bytes: 1412..1529), hits: 21)
+- creation IC 5 -> Item 50: Function "constructor" (location: (source ID: 28, lines: 43..46, bytes: 1412..1529), hits: 21)
+- creation IC 179 -> Item 51: Line (location: (source ID: 28, lines: 44..45, bytes: 1464..1522), hits: 21)
+- creation IC 179 -> Item 52: Statement (location: (source ID: 28, lines: 44..45, bytes: 1464..1522), hits: 21)
+-  runtime IC 6412 -> Item 53: Line (location: (source ID: 28, lines: 110..114, bytes: 3778..3843), hits: 14)
+-  runtime IC 6412 -> Item 54: Function "onlyAuditor" (location: (source ID: 28, lines: 110..114, bytes: 3778..3843), hits: 14)
+-  runtime IC 6412 -> Item 55: Line (location: (source ID: 28, lines: 111..112, bytes: 3811..3825), hits: 14)
+-  runtime IC 6412 -> Item 56: Statement (location: (source ID: 28, lines: 111..112, bytes: 3811..3825), hits: 14)
+-  runtime IC 8276 -> Item 57: Line (location: (source ID: 28, lines: 115..120, bytes: 3849..3974), hits: 14)
+-  runtime IC 8276 -> Item 58: Function "_onlyAuditor" (location: (source ID: 28, lines: 115..120, bytes: 3849..3974), hits: 14)
+-  runtime IC 8277 -> Item 59: Line (location: (source ID: 28, lines: 116..117, bytes: 3901..3922), hits: 14)
+-  runtime IC 8277 -> Item 60: Statement (location: (source ID: 28, lines: 116..117, bytes: 3901..3922), hits: 14)
+-  runtime IC 8355 -> Item 61: Branch (branch: 0, path: 0) (location: (source ID: 28, lines: 116..119, bytes: 3924..3968), hits: 1)
+-  runtime IC 8355 -> Item 62: Line (location: (source ID: 28, lines: 117..118, bytes: 3938..3957), hits: 1)
+-  runtime IC 8355 -> Item 63: Statement (location: (source ID: 28, lines: 117..118, bytes: 3938..3957), hits: 1)
+-  runtime IC 1379 -> Item 64: Line (location: (source ID: 28, lines: 124..128, bytes: 4128..4261), hits: 22)
+-  runtime IC 1379 -> Item 65: Function "addAuditor" (location: (source ID: 28, lines: 124..128, bytes: 4128..4261), hits: 22)
+-  runtime IC 6891 -> Item 66: Line (location: (source ID: 28, lines: 125..126, bytes: 4194..4218), hits: 22)
+-  runtime IC 6891 -> Item 67: Statement (location: (source ID: 28, lines: 125..126, bytes: 4194..4218), hits: 22)
+-  runtime IC 6976 -> Item 68: Line (location: (source ID: 28, lines: 126..127, bytes: 4228..4254), hits: 22)
+-  runtime IC 6976 -> Item 69: Statement (location: (source ID: 28, lines: 126..127, bytes: 4228..4254), hits: 22)
+-  runtime IC 1419 -> Item 70: Line (location: (source ID: 28, lines: 129..133, bytes: 4267..4406), hits: 1)
+-  runtime IC 1419 -> Item 71: Function "removeAuditor" (location: (source ID: 28, lines: 129..133, bytes: 4267..4406), hits: 1)
+-  runtime IC 7054 -> Item 72: Line (location: (source ID: 28, lines: 130..131, bytes: 4336..4361), hits: 1)
+-  runtime IC 7054 -> Item 73: Statement (location: (source ID: 28, lines: 130..131, bytes: 4336..4361), hits: 1)
+-  runtime IC 7138 -> Item 74: Line (location: (source ID: 28, lines: 131..132, bytes: 4371..4399), hits: 1)
+-  runtime IC 7138 -> Item 75: Statement (location: (source ID: 28, lines: 131..132, bytes: 4371..4399), hits: 1)
+-  runtime IC 882 -> Item 76: Line (location: (source ID: 28, lines: 134..137, bytes: 4412..4520), hits: 2)
+-  runtime IC 882 -> Item 77: Function "isAuditor" (location: (source ID: 28, lines: 134..137, bytes: 4412..4520), hits: 2)
+-  runtime IC 3879 -> Item 78: Line (location: (source ID: 28, lines: 135..136, bytes: 4488..4513), hits: 2)
+-  runtime IC 3879 -> Item 79: Statement (location: (source ID: 28, lines: 135..136, bytes: 4488..4513), hits: 2)
+-  runtime IC 740 -> Item 80: Line (location: (source ID: 28, lines: 138..147, bytes: 4526..4947), hits: 15)
+-  runtime IC 740 -> Item 81: Function "registerProject" (location: (source ID: 28, lines: 138..147, bytes: 4526..4947), hits: 15)
+-  runtime IC 3345 -> Item 82: Line (location: (source ID: 28, lines: 139..140, bytes: 4625..4651), hits: 15)
+-  runtime IC 3345 -> Item 83: Statement (location: (source ID: 28, lines: 139..140, bytes: 4625..4651), hits: 15)
+-  runtime IC 3396 -> Item 84: Branch (branch: 1, path: 0) (location: (source ID: 28, lines: 139..142, bytes: 4653..4701), hits: 1)
+-  runtime IC 3396 -> Item 85: Line (location: (source ID: 28, lines: 140..141, bytes: 4667..4690), hits: 1)
+-  runtime IC 3396 -> Item 86: Statement (location: (source ID: 28, lines: 140..141, bytes: 4667..4690), hits: 1)
+-  runtime IC 3446 -> Item 87: Line (location: (source ID: 28, lines: 142..144, bytes: 4710..4854), hits: 14)
+-  runtime IC 3446 -> Item 88: Statement (location: (source ID: 28, lines: 142..144, bytes: 4710..4854), hits: 14)
+-  runtime IC 3742 -> Item 89: Line (location: (source ID: 28, lines: 144..145, bytes: 4864..4915), hits: 14)
+-  runtime IC 3742 -> Item 90: Statement (location: (source ID: 28, lines: 144..145, bytes: 4864..4915), hits: 14)
+-  runtime IC 3812 -> Item 91: Line (location: (source ID: 28, lines: 145..146, bytes: 4925..4940), hits: 14)
+-  runtime IC 3812 -> Item 92: Statement (location: (source ID: 28, lines: 145..146, bytes: 4925..4940), hits: 14)
+-  runtime IC 1276 -> Item 93: Line (location: (source ID: 28, lines: 148..158, bytes: 4953..5352), hits: 14)
+-  runtime IC 1276 -> Item 94: Function "verifyProject" (location: (source ID: 28, lines: 148..158, bytes: 4953..5352), hits: 14)
+-  runtime IC 6420 -> Item 95: Line (location: (source ID: 28, lines: 149..150, bytes: 5043..5088), hits: 13)
+-  runtime IC 6420 -> Item 96: Statement (location: (source ID: 28, lines: 149..150, bytes: 5043..5088), hits: 13)
+-  runtime IC 6463 -> Item 97: Line (location: (source ID: 28, lines: 150..151, bytes: 5122..5153), hits: 1)
+-  runtime IC 6463 -> Item 98: Statement (location: (source ID: 28, lines: 150..151, bytes: 5122..5153), hits: 1)
+-  runtime IC 6463 -> Item 99: Branch (branch: 2, path: 0) (location: (source ID: 28, lines: 150..151, bytes: 5122..5153), hits: 1)
+-  runtime IC 6513 -> Item 100: Line (location: (source ID: 28, lines: 152..153, bytes: 5164..5189), hits: 12)
+-  runtime IC 6513 -> Item 101: Statement (location: (source ID: 28, lines: 152..153, bytes: 5164..5189), hits: 12)
+-  runtime IC 6542 -> Item 102: Line (location: (source ID: 28, lines: 153..154, bytes: 5199..5224), hits: 12)
+-  runtime IC 6542 -> Item 103: Statement (location: (source ID: 28, lines: 153..154, bytes: 5199..5224), hits: 12)
+-  runtime IC 6551 -> Item 104: Line (location: (source ID: 28, lines: 155..156, bytes: 5235..5283), hits: 12)
+-  runtime IC 6551 -> Item 105: Statement (location: (source ID: 28, lines: 155..156, bytes: 5235..5283), hits: 12)
+-  runtime IC 6722 -> Item 106: Line (location: (source ID: 28, lines: 156..157, bytes: 5293..5345), hits: 12)
+-  runtime IC 6722 -> Item 107: Statement (location: (source ID: 28, lines: 156..157, bytes: 5293..5345), hits: 12)
+-  runtime IC 1152 -> Item 108: Line (location: (source ID: 28, lines: 160..183, bytes: 5405..6294), hits: 10)
+-  runtime IC 1152 -> Item 109: Function "listCreditsForSell" (location: (source ID: 28, lines: 160..183, bytes: 5405..6294), hits: 10)
+-  runtime IC 5088 -> Item 110: Line (location: (source ID: 28, lines: 161..162, bytes: 5502..5519), hits: 10)
+-  runtime IC 5088 -> Item 111: Statement (location: (source ID: 28, lines: 161..162, bytes: 5502..5519), hits: 10)
+-  runtime IC 5095 -> Item 112: Branch (branch: 3, path: 0) (location: (source ID: 28, lines: 161..164, bytes: 5521..5568), hits: 1)
+-  runtime IC 5095 -> Item 113: Line (location: (source ID: 28, lines: 162..163, bytes: 5535..5557), hits: 1)
+-  runtime IC 5095 -> Item 114: Statement (location: (source ID: 28, lines: 162..163, bytes: 5535..5557), hits: 1)
+-  runtime IC 5145 -> Item 115: Line (location: (source ID: 28, lines: 164..165, bytes: 5581..5600), hits: 9)
+-  runtime IC 5145 -> Item 116: Statement (location: (source ID: 28, lines: 164..165, bytes: 5581..5600), hits: 9)
+-  runtime IC 5152 -> Item 117: Branch (branch: 4, path: 0) (location: (source ID: 28, lines: 164..167, bytes: 5602..5648), hits: 1)
+-  runtime IC 5152 -> Item 118: Line (location: (source ID: 28, lines: 165..166, bytes: 5616..5637), hits: 1)
+-  runtime IC 5152 -> Item 119: Statement (location: (source ID: 28, lines: 165..166, bytes: 5616..5637), hits: 1)
+-  runtime IC 5202 -> Item 120: Line (location: (source ID: 28, lines: 167..168, bytes: 5661..5702), hits: 8)
+-  runtime IC 5202 -> Item 121: Statement (location: (source ID: 28, lines: 167..168, bytes: 5661..5702), hits: 8)
+-  runtime IC 5201 -> Item 122: Statement (location: (source ID: 28, lines: 167..168, bytes: 5661..5717), hits: 8)
+-  runtime IC 5360 -> Item 123: Branch (branch: 5, path: 0) (location: (source ID: 28, lines: 167..170, bytes: 5719..5772), hits: 1)
+-  runtime IC 5360 -> Item 124: Line (location: (source ID: 28, lines: 168..169, bytes: 5733..5761), hits: 1)
+-  runtime IC 5360 -> Item 125: Statement (location: (source ID: 28, lines: 168..169, bytes: 5733..5761), hits: 1)
+-  runtime IC 5410 -> Item 126: Line (location: (source ID: 28, lines: 171..172, bytes: 5782..5851), hits: 7)
+-  runtime IC 5410 -> Item 127: Statement (location: (source ID: 28, lines: 171..172, bytes: 5782..5851), hits: 7)
+-  runtime IC 5548 -> Item 128: Line (location: (source ID: 28, lines: 172..173, bytes: 5861..5949), hits: 7)
+-  runtime IC 5548 -> Item 129: Statement (location: (source ID: 28, lines: 172..173, bytes: 5861..5949), hits: 7)
+-  runtime IC 5549 -> Item 130: Statement (location: (source ID: 28, lines: 172..173, bytes: 5876..5949), hits: 7)
+-  runtime IC 5708 -> Item 131: Line (location: (source ID: 28, lines: 173..174, bytes: 5963..5971), hits: 7)
+-  runtime IC 5708 -> Item 132: Statement (location: (source ID: 28, lines: 173..174, bytes: 5963..5971), hits: 7)
+-  runtime IC 5713 -> Item 133: Branch (branch: 6, path: 0) (location: (source ID: 28, lines: 173..176, bytes: 5973..6021), hits: 0)
+-  runtime IC 5713 -> Item 134: Line (location: (source ID: 28, lines: 174..175, bytes: 5987..6010), hits: 0)
+-  runtime IC 5713 -> Item 135: Statement (location: (source ID: 28, lines: 174..175, bytes: 5987..6010), hits: 0)
+-  runtime IC 5763 -> Item 136: Line (location: (source ID: 28, lines: 177..179, bytes: 6031..6176), hits: 7)
+-  runtime IC 5763 -> Item 137: Statement (location: (source ID: 28, lines: 177..179, bytes: 6031..6176), hits: 7)
+-  runtime IC 5981 -> Item 138: Line (location: (source ID: 28, lines: 180..181, bytes: 6187..6262), hits: 7)
+-  runtime IC 5981 -> Item 139: Statement (location: (source ID: 28, lines: 180..181, bytes: 6187..6262), hits: 7)
+-  runtime IC 6063 -> Item 140: Line (location: (source ID: 28, lines: 181..182, bytes: 6272..6287), hits: 7)
+-  runtime IC 6063 -> Item 141: Statement (location: (source ID: 28, lines: 181..182, bytes: 6272..6287), hits: 7)
+-  runtime IC 1581 -> Item 142: Line (location: (source ID: 28, lines: 184..191, bytes: 6300..6535), hits: 0)
+-  runtime IC 1581 -> Item 143: Function "haltSelling" (location: (source ID: 28, lines: 184..191, bytes: 6300..6535), hits: 0)
+-  runtime IC 7762 -> Item 144: Line (location: (source ID: 28, lines: 185..186, bytes: 6359..6404), hits: 0)
+-  runtime IC 7762 -> Item 145: Statement (location: (source ID: 28, lines: 185..186, bytes: 6359..6404), hits: 0)
+-  runtime IC 7782 -> Item 146: Line (location: (source ID: 28, lines: 186..187, bytes: 6418..6446), hits: 0)
+-  runtime IC 7782 -> Item 147: Statement (location: (source ID: 28, lines: 186..187, bytes: 6418..6446), hits: 0)
+-  runtime IC 7868 -> Item 148: Branch (branch: 7, path: 0) (location: (source ID: 28, lines: 186..189, bytes: 6448..6495), hits: 0)
+-  runtime IC 7868 -> Item 149: Line (location: (source ID: 28, lines: 187..188, bytes: 6462..6484), hits: 0)
+-  runtime IC 7868 -> Item 150: Statement (location: (source ID: 28, lines: 187..188, bytes: 6462..6484), hits: 0)
+-  runtime IC 7918 -> Item 151: Line (location: (source ID: 28, lines: 189..190, bytes: 6504..6528), hits: 0)
+-  runtime IC 7918 -> Item 152: Statement (location: (source ID: 28, lines: 189..190, bytes: 6504..6528), hits: 0)
+-  runtime IC 548 -> Item 153: Line (location: (source ID: 28, lines: 192..199, bytes: 6541..6777), hits: 0)
+-  runtime IC 548 -> Item 154: Function "resumeSelling" (location: (source ID: 28, lines: 192..199, bytes: 6541..6777), hits: 0)
+-  runtime IC 1859 -> Item 155: Line (location: (source ID: 28, lines: 193..194, bytes: 6602..6647), hits: 0)
+-  runtime IC 1859 -> Item 156: Statement (location: (source ID: 28, lines: 193..194, bytes: 6602..6647), hits: 0)
+-  runtime IC 1879 -> Item 157: Line (location: (source ID: 28, lines: 194..195, bytes: 6661..6689), hits: 0)
+-  runtime IC 1879 -> Item 158: Statement (location: (source ID: 28, lines: 194..195, bytes: 6661..6689), hits: 0)
+-  runtime IC 1965 -> Item 159: Branch (branch: 8, path: 0) (location: (source ID: 28, lines: 194..197, bytes: 6691..6738), hits: 0)
+-  runtime IC 1965 -> Item 160: Line (location: (source ID: 28, lines: 195..196, bytes: 6705..6727), hits: 0)
+-  runtime IC 1965 -> Item 161: Statement (location: (source ID: 28, lines: 195..196, bytes: 6705..6727), hits: 0)
+-  runtime IC 2015 -> Item 162: Line (location: (source ID: 28, lines: 197..198, bytes: 6747..6770), hits: 0)
+-  runtime IC 2015 -> Item 163: Statement (location: (source ID: 28, lines: 197..198, bytes: 6747..6770), hits: 0)
+-  runtime IC 630 -> Item 164: Line (location: (source ID: 28, lines: 200..215, bytes: 6783..7240), hits: 0)
+-  runtime IC 630 -> Item 165: Function "cancelListing" (location: (source ID: 28, lines: 200..215, bytes: 6783..7240), hits: 0)
+-  runtime IC 2083 -> Item 166: Line (location: (source ID: 28, lines: 201..202, bytes: 6844..6889), hits: 0)
+-  runtime IC 2083 -> Item 167: Statement (location: (source ID: 28, lines: 201..202, bytes: 6844..6889), hits: 0)
+-  runtime IC 2103 -> Item 168: Line (location: (source ID: 28, lines: 202..203, bytes: 6903..6931), hits: 0)
+-  runtime IC 2103 -> Item 169: Statement (location: (source ID: 28, lines: 202..203, bytes: 6903..6931), hits: 0)
+-  runtime IC 2189 -> Item 170: Branch (branch: 9, path: 0) (location: (source ID: 28, lines: 202..205, bytes: 6933..6980), hits: 0)
+-  runtime IC 2189 -> Item 171: Line (location: (source ID: 28, lines: 203..204, bytes: 6947..6969), hits: 0)
+-  runtime IC 2189 -> Item 172: Statement (location: (source ID: 28, lines: 203..204, bytes: 6947..6969), hits: 0)
+-  runtime IC 2239 -> Item 173: Line (location: (source ID: 28, lines: 206..207, bytes: 6990..7062), hits: 0)
+-  runtime IC 2239 -> Item 174: Statement (location: (source ID: 28, lines: 206..207, bytes: 6990..7062), hits: 0)
+-  runtime IC 2240 -> Item 175: Statement (location: (source ID: 28, lines: 206..207, bytes: 7005..7062), hits: 0)
+-  runtime IC 2400 -> Item 176: Line (location: (source ID: 28, lines: 207..208, bytes: 7076..7084), hits: 0)
+-  runtime IC 2400 -> Item 177: Statement (location: (source ID: 28, lines: 207..208, bytes: 7076..7084), hits: 0)
+-  runtime IC 2405 -> Item 178: Branch (branch: 10, path: 0) (location: (source ID: 28, lines: 207..210, bytes: 7086..7134), hits: 0)
+-  runtime IC 2405 -> Item 179: Line (location: (source ID: 28, lines: 208..209, bytes: 7100..7123), hits: 0)
+-  runtime IC 2405 -> Item 180: Statement (location: (source ID: 28, lines: 208..209, bytes: 7100..7123), hits: 0)
+-  runtime IC 2455 -> Item 181: Line (location: (source ID: 28, lines: 211..212, bytes: 7144..7168), hits: 0)
+-  runtime IC 2455 -> Item 182: Statement (location: (source ID: 28, lines: 211..212, bytes: 7144..7168), hits: 0)
+-  runtime IC 2482 -> Item 183: Line (location: (source ID: 28, lines: 212..213, bytes: 7178..7197), hits: 0)
+-  runtime IC 2482 -> Item 184: Statement (location: (source ID: 28, lines: 212..213, bytes: 7178..7197), hits: 0)
+-  runtime IC 2490 -> Item 185: Line (location: (source ID: 28, lines: 213..214, bytes: 7207..7233), hits: 0)
+-  runtime IC 2490 -> Item 186: Statement (location: (source ID: 28, lines: 213..214, bytes: 7207..7233), hits: 0)
+-  runtime IC 712 -> Item 187: Line (location: (source ID: 28, lines: 216..243, bytes: 7246..8137), hits: 3)
+-  runtime IC 712 -> Item 188: Function "buyTokens" (location: (source ID: 28, lines: 216..243, bytes: 7246..8137), hits: 3)
+-  runtime IC 2577 -> Item 189: Line (location: (source ID: 28, lines: 217..218, bytes: 7311..7356), hits: 3)
+-  runtime IC 2577 -> Item 190: Statement (location: (source ID: 28, lines: 217..218, bytes: 7311..7356), hits: 3)
+-  runtime IC 2597 -> Item 191: Line (location: (source ID: 28, lines: 218..219, bytes: 7370..7387), hits: 3)
+-  runtime IC 2597 -> Item 192: Statement (location: (source ID: 28, lines: 218..219, bytes: 7370..7387), hits: 3)
+-  runtime IC 2618 -> Item 193: Branch (branch: 11, path: 0) (location: (source ID: 28, lines: 218..221, bytes: 7389..7444), hits: 0)
+-  runtime IC 2618 -> Item 194: Line (location: (source ID: 28, lines: 219..220, bytes: 7403..7433), hits: 0)
+-  runtime IC 2618 -> Item 195: Statement (location: (source ID: 28, lines: 219..220, bytes: 7403..7433), hits: 0)
+-  runtime IC 2668 -> Item 196: Line (location: (source ID: 28, lines: 222..223, bytes: 7454..7515), hits: 3)
+-  runtime IC 2668 -> Item 197: Statement (location: (source ID: 28, lines: 222..223, bytes: 7454..7515), hits: 3)
+-  runtime IC 2669 -> Item 198: Statement (location: (source ID: 28, lines: 222..223, bytes: 7475..7515), hits: 3)
+-  runtime IC 2690 -> Item 199: Line (location: (source ID: 28, lines: 223..224, bytes: 7529..7551), hits: 3)
+-  runtime IC 2690 -> Item 200: Statement (location: (source ID: 28, lines: 223..224, bytes: 7529..7551), hits: 3)
+-  runtime IC 2698 -> Item 201: Branch (branch: 12, path: 0) (location: (source ID: 28, lines: 223..226, bytes: 7553..7606), hits: 0)
+-  runtime IC 2698 -> Item 202: Line (location: (source ID: 28, lines: 224..225, bytes: 7567..7595), hits: 0)
+-  runtime IC 2698 -> Item 203: Statement (location: (source ID: 28, lines: 224..225, bytes: 7567..7595), hits: 0)
+-  runtime IC 2748 -> Item 204: Line (location: (source ID: 28, lines: 228..229, bytes: 7651..7723), hits: 3)
+-  runtime IC 2748 -> Item 205: Statement (location: (source ID: 28, lines: 228..229, bytes: 7651..7723), hits: 3)
+-  runtime IC 2749 -> Item 206: Statement (location: (source ID: 28, lines: 228..229, bytes: 7666..7723), hits: 3)
+-  runtime IC 2909 -> Item 207: Line (location: (source ID: 28, lines: 229..230, bytes: 7737..7745), hits: 3)
+-  runtime IC 2909 -> Item 208: Statement (location: (source ID: 28, lines: 229..230, bytes: 7737..7745), hits: 3)
+-  runtime IC 2914 -> Item 209: Branch (branch: 13, path: 0) (location: (source ID: 28, lines: 229..232, bytes: 7747..7795), hits: 0)
+-  runtime IC 2914 -> Item 210: Line (location: (source ID: 28, lines: 230..231, bytes: 7761..7784), hits: 0)
+-  runtime IC 2914 -> Item 211: Statement (location: (source ID: 28, lines: 230..231, bytes: 7761..7784), hits: 0)
+-  runtime IC 2964 -> Item 212: Line (location: (source ID: 28, lines: 232..233, bytes: 7804..7847), hits: 3)
+-  runtime IC 2964 -> Item 213: Statement (location: (source ID: 28, lines: 232..233, bytes: 7804..7847), hits: 3)
+-  runtime IC 3082 -> Item 214: Line (location: (source ID: 28, lines: 234..235, bytes: 7858..7882), hits: 3)
+-  runtime IC 3082 -> Item 215: Statement (location: (source ID: 28, lines: 234..235, bytes: 7858..7882), hits: 3)
+-  runtime IC 3109 -> Item 216: Line (location: (source ID: 28, lines: 237..238, bytes: 7930..7952), hits: 3)
+-  runtime IC 3109 -> Item 217: Statement (location: (source ID: 28, lines: 237..238, bytes: 7930..7952), hits: 3)
+-  runtime IC 3117 -> Item 218: Branch (branch: 14, path: 0) (location: (source ID: 28, lines: 237..240, bytes: 7954..8031), hits: 0)
+-  runtime IC 3117 -> Item 219: Line (location: (source ID: 28, lines: 238..239, bytes: 7968..8020), hits: 0)
+-  runtime IC 3117 -> Item 220: Statement (location: (source ID: 28, lines: 238..239, bytes: 7968..8020), hits: 0)
+-  runtime IC 3197 -> Item 221: Line (location: (source ID: 28, lines: 241..242, bytes: 8041..8130), hits: 3)
+-  runtime IC 3197 -> Item 222: Statement (location: (source ID: 28, lines: 241..242, bytes: 8041..8130), hits: 3)
+-  runtime IC 1130 -> Item 223: Line (location: (source ID: 28, lines: 244..254, bytes: 8143..8516), hits: 2)
+-  runtime IC 1130 -> Item 224: Function "withdrawProceeds" (location: (source ID: 28, lines: 244..254, bytes: 8143..8516), hits: 2)
+-  runtime IC 4669 -> Item 225: Line (location: (source ID: 28, lines: 245..246, bytes: 8190..8235), hits: 2)
+-  runtime IC 4669 -> Item 226: Statement (location: (source ID: 28, lines: 245..246, bytes: 8190..8235), hits: 2)
+-  runtime IC 4734 -> Item 227: Line (location: (source ID: 28, lines: 246..247, bytes: 8249..8262), hits: 2)
+-  runtime IC 4734 -> Item 228: Statement (location: (source ID: 28, lines: 246..247, bytes: 8249..8262), hits: 2)
+-  runtime IC 4741 -> Item 229: Statement (location: (source ID: 28, lines: 246..247, bytes: 8264..8293), hits: 1)
+-  runtime IC 4741 -> Item 230: Branch (branch: 15, path: 0) (location: (source ID: 28, lines: 246..247, bytes: 8264..8293), hits: 1)
+-  runtime IC 4791 -> Item 231: Line (location: (source ID: 28, lines: 248..249, bytes: 8304..8367), hits: 1)
+-  runtime IC 4791 -> Item 232: Statement (location: (source ID: 28, lines: 248..249, bytes: 8304..8367), hits: 1)
+-  runtime IC 4792 -> Item 233: Statement (location: (source ID: 28, lines: 248..249, bytes: 8322..8367), hits: 1)
+-  runtime IC 4895 -> Item 234: Line (location: (source ID: 28, lines: 249..250, bytes: 8381..8389), hits: 1)
+-  runtime IC 4895 -> Item 235: Statement (location: (source ID: 28, lines: 249..250, bytes: 8381..8389), hits: 1)
+-  runtime IC 4900 -> Item 236: Statement (location: (source ID: 28, lines: 249..250, bytes: 8391..8414), hits: 0)
+-  runtime IC 4900 -> Item 237: Branch (branch: 16, path: 0) (location: (source ID: 28, lines: 249..250, bytes: 8391..8414), hits: 0)
+-  runtime IC 4950 -> Item 238: Line (location: (source ID: 28, lines: 251..252, bytes: 8425..8455), hits: 1)
+-  runtime IC 4950 -> Item 239: Statement (location: (source ID: 28, lines: 251..252, bytes: 8425..8455), hits: 1)
+-  runtime IC 5016 -> Item 240: Line (location: (source ID: 28, lines: 252..253, bytes: 8465..8509), hits: 1)
+-  runtime IC 5016 -> Item 241: Statement (location: (source ID: 28, lines: 252..253, bytes: 8465..8509), hits: 1)
+-  runtime IC 1501 -> Item 242: Line (location: (source ID: 28, lines: 255..263, bytes: 8522..8798), hits: 2)
+-  runtime IC 1501 -> Item 243: Function "retireCredit" (location: (source ID: 28, lines: 255..263, bytes: 8522..8798), hits: 2)
+-  runtime IC 7215 -> Item 244: Line (location: (source ID: 28, lines: 256..257, bytes: 8583..8624), hits: 2)
+-  runtime IC 7215 -> Item 245: Statement (location: (source ID: 28, lines: 256..257, bytes: 8583..8624), hits: 2)
+-  runtime IC 7214 -> Item 246: Statement (location: (source ID: 28, lines: 256..257, bytes: 8583..8633), hits: 2)
+-  runtime IC 7373 -> Item 247: Branch (branch: 17, path: 0) (location: (source ID: 28, lines: 256..259, bytes: 8635..8688), hits: 1)
+-  runtime IC 7373 -> Item 248: Line (location: (source ID: 28, lines: 257..258, bytes: 8649..8677), hits: 1)
+-  runtime IC 7373 -> Item 249: Statement (location: (source ID: 28, lines: 257..258, bytes: 8649..8677), hits: 1)
+-  runtime IC 7423 -> Item 250: Line (location: (source ID: 28, lines: 260..261, bytes: 8698..8742), hits: 1)
+-  runtime IC 7423 -> Item 251: Statement (location: (source ID: 28, lines: 260..261, bytes: 8698..8742), hits: 1)
+-  runtime IC 7559 -> Item 252: Line (location: (source ID: 28, lines: 261..262, bytes: 8752..8791), hits: 1)
+-  runtime IC 7559 -> Item 253: Statement (location: (source ID: 28, lines: 261..262, bytes: 8752..8791), hits: 1)
+-  runtime IC 1024 -> Item 254: Line (location: (source ID: 28, lines: 264..268, bytes: 8804..8998), hits: 1)
+-  runtime IC 1024 -> Item 255: Function "withdrawCharges" (location: (source ID: 28, lines: 264..268, bytes: 8804..8998), hits: 1)
+-  runtime IC 4008 -> Item 256: Line (location: (source ID: 28, lines: 265..266, bytes: 8860..8940), hits: 1)
+-  runtime IC 4008 -> Item 257: Statement (location: (source ID: 28, lines: 265..266, bytes: 8860..8940), hits: 1)
+-  runtime IC 4009 -> Item 258: Statement (location: (source ID: 28, lines: 265..266, bytes: 8882..8940), hits: 1)
+-  runtime IC 4112 -> Item 259: Line (location: (source ID: 28, lines: 266..267, bytes: 8954..8966), hits: 1)
+-  runtime IC 4112 -> Item 260: Statement (location: (source ID: 28, lines: 266..267, bytes: 8954..8966), hits: 1)
+-  runtime IC 4117 -> Item 261: Statement (location: (source ID: 28, lines: 266..267, bytes: 8968..8991), hits: 0)
+-  runtime IC 4117 -> Item 262: Branch (branch: 18, path: 0) (location: (source ID: 28, lines: 266..267, bytes: 8968..8991), hits: 0)
+-  runtime IC 1234 -> Item 263: Line (location: (source ID: 28, lines: 273..282, bytes: 9159..9438), hits: 1)
+-  runtime IC 1234 -> Item 264: Function "getAllListings" (location: (source ID: 28, lines: 273..282, bytes: 9159..9438), hits: 1)
+-  runtime IC 6099 -> Item 265: Line (location: (source ID: 28, lines: 274..275, bytes: 9236..9295), hits: 1)
+-  runtime IC 6099 -> Item 266: Statement (location: (source ID: 28, lines: 274..275, bytes: 9236..9295), hits: 1)
+-  runtime IC 6100 -> Item 267: Statement (location: (source ID: 28, lines: 274..275, bytes: 9267..9295), hits: 1)
+-  runtime IC 6188 -> Item 268: Line (location: (source ID: 28, lines: 276..277, bytes: 9311..9324), hits: 1)
+-  runtime IC 6188 -> Item 269: Statement (location: (source ID: 28, lines: 276..277, bytes: 9311..9324), hits: 1)
+-  runtime IC 6193 -> Item 270: Statement (location: (source ID: 28, lines: 276..277, bytes: 9326..9343), hits: 3)
+-  runtime IC 6391 -> Item 271: Statement (location: (source ID: 28, lines: 276..277, bytes: 9345..9348), hits: 2)
+-  runtime IC 6203 -> Item 272: Line (location: (source ID: 28, lines: 277..278, bytes: 9364..9392), hits: 2)
+-  runtime IC 6203 -> Item 273: Statement (location: (source ID: 28, lines: 277..278, bytes: 9364..9392), hits: 2)
+-  runtime IC 6405 -> Item 274: Line (location: (source ID: 28, lines: 280..281, bytes: 9413..9431), hits: 1)
+-  runtime IC 6405 -> Item 275: Statement (location: (source ID: 28, lines: 280..281, bytes: 9413..9431), hits: 1)
+-  runtime IC 1046 -> Item 276: Line (location: (source ID: 28, lines: 283..292, bytes: 9444..9723), hits: 0)
+-  runtime IC 1046 -> Item 277: Function "getAllProjects" (location: (source ID: 28, lines: 283..292, bytes: 9444..9723), hits: 0)
+-  runtime IC 4172 -> Item 278: Line (location: (source ID: 28, lines: 284..285, bytes: 9521..9580), hits: 0)
+-  runtime IC 4172 -> Item 279: Statement (location: (source ID: 28, lines: 284..285, bytes: 9521..9580), hits: 0)
+-  runtime IC 4173 -> Item 280: Statement (location: (source ID: 28, lines: 284..285, bytes: 9552..9580), hits: 0)
+-  runtime IC 4261 -> Item 281: Line (location: (source ID: 28, lines: 286..287, bytes: 9596..9609), hits: 0)
+-  runtime IC 4261 -> Item 282: Statement (location: (source ID: 28, lines: 286..287, bytes: 9596..9609), hits: 0)
+-  runtime IC 4266 -> Item 283: Statement (location: (source ID: 28, lines: 286..287, bytes: 9611..9628), hits: 0)
+-  runtime IC 4609 -> Item 284: Statement (location: (source ID: 28, lines: 286..287, bytes: 9630..9633), hits: 0)
+-  runtime IC 4276 -> Item 285: Line (location: (source ID: 28, lines: 287..288, bytes: 9649..9677), hits: 0)
+-  runtime IC 4276 -> Item 286: Statement (location: (source ID: 28, lines: 287..288, bytes: 9649..9677), hits: 0)
+-  runtime IC 4623 -> Item 287: Line (location: (source ID: 28, lines: 290..291, bytes: 9698..9716), hits: 0)
+-  runtime IC 4623 -> Item 288: Statement (location: (source ID: 28, lines: 290..291, bytes: 9698..9716), hits: 0)
+-  runtime IC 670 -> Item 289: Line (location: (source ID: 28, lines: 293..297, bytes: 9729..9877), hits: 0)
+-  runtime IC 670 -> Item 290: Function "getSellerProceeds" (location: (source ID: 28, lines: 293..297, bytes: 9729..9877), hits: 0)
+-  runtime IC 2505 -> Item 291: Line (location: (source ID: 28, lines: 294..295, bytes: 9800..9845), hits: 0)
+-  runtime IC 2505 -> Item 292: Statement (location: (source ID: 28, lines: 294..295, bytes: 9800..9845), hits: 0)
+-  runtime IC 2570 -> Item 293: Line (location: (source ID: 28, lines: 295..296, bytes: 9855..9870), hits: 0)
+-  runtime IC 2570 -> Item 294: Statement (location: (source ID: 28, lines: 295..296, bytes: 9855..9870), hits: 0)
+-  runtime IC 442 -> Item 295: Line (location: (source ID: 28, lines: 298..301, bytes: 9883..9980), hits: 0)
+-  runtime IC 442 -> Item 296: Function "getNextProjectId" (location: (source ID: 28, lines: 298..301, bytes: 9883..9980), hits: 0)
+-  runtime IC 1623 -> Item 297: Line (location: (source ID: 28, lines: 299..300, bytes: 9953..9973), hits: 0)
+-  runtime IC 1623 -> Item 298: Statement (location: (source ID: 28, lines: 299..300, bytes: 9953..9973), hits: 0)
+-  runtime IC 780 -> Item 299: Line (location: (source ID: 28, lines: 302..305, bytes: 9986..10083), hits: 0)
+-  runtime IC 780 -> Item 300: Function "getNextListingId" (location: (source ID: 28, lines: 302..305, bytes: 9986..10083), hits: 0)
+-  runtime IC 3841 -> Item 301: Line (location: (source ID: 28, lines: 303..304, bytes: 10056..10076), hits: 0)
+-  runtime IC 3841 -> Item 302: Statement (location: (source ID: 28, lines: 303..304, bytes: 10056..10076), hits: 0)
+
+Anchors for Contract "CarbonCreditToken" (solc 0.8.30, source ID 27):
+- creation IC 5 -> Item 11: Line (location: (source ID: 27, lines: 27..30, bytes: 897..990), hits: 28)
+- creation IC 5 -> Item 12: Function "constructor" (location: (source ID: 27, lines: 27..30, bytes: 897..990), hits: 28)
+- creation IC 192 -> Item 13: Line (location: (source ID: 27, lines: 28..29, bytes: 970..983), hits: 28)
+- creation IC 192 -> Item 14: Statement (location: (source ID: 27, lines: 28..29, bytes: 970..983), hits: 28)
+-  runtime IC 961 -> Item 15: Line (location: (source ID: 27, lines: 34..38, bytes: 1071..1132), hits: 16)
+-  runtime IC 961 -> Item 16: Function "onlyOwner" (location: (source ID: 27, lines: 34..38, bytes: 1071..1132), hits: 16)
+-  runtime IC 961 -> Item 17: Line (location: (source ID: 27, lines: 35..36, bytes: 1102..1114), hits: 16)
+-  runtime IC 961 -> Item 18: Statement (location: (source ID: 27, lines: 35..36, bytes: 1102..1114), hits: 16)
+-  runtime IC 1984 -> Item 19: Line (location: (source ID: 27, lines: 39..44, bytes: 1138..1268), hits: 26)
+-  runtime IC 1984 -> Item 20: Function "_onlyOwner" (location: (source ID: 27, lines: 39..44, bytes: 1138..1268), hits: 26)
+-  runtime IC 1985 -> Item 21: Line (location: (source ID: 27, lines: 40..41, bytes: 1188..1207), hits: 26)
+-  runtime IC 1985 -> Item 22: Statement (location: (source ID: 27, lines: 40..41, bytes: 1188..1207), hits: 26)
+-  runtime IC 2068 -> Item 23: Branch (branch: 0, path: 0) (location: (source ID: 27, lines: 40..43, bytes: 1209..1262), hits: 1)
+-  runtime IC 2068 -> Item 24: Line (location: (source ID: 27, lines: 41..42, bytes: 1223..1251), hits: 1)
+-  runtime IC 2068 -> Item 25: Statement (location: (source ID: 27, lines: 41..42, bytes: 1223..1251), hits: 1)
+-  runtime IC 425 -> Item 26: Line (location: (source ID: 27, lines: 48..54, bytes: 1345..1519), hits: 16)
+-  runtime IC 425 -> Item 27: Function "mint" (location: (source ID: 27, lines: 48..54, bytes: 1345..1519), hits: 16)
+-  runtime IC 969 -> Item 28: Line (location: (source ID: 27, lines: 49..50, bytes: 1420..1436), hits: 15)
+-  runtime IC 969 -> Item 29: Statement (location: (source ID: 27, lines: 49..50, bytes: 1420..1436), hits: 15)
+-  runtime IC 1020 -> Item 30: Branch (branch: 1, path: 0) (location: (source ID: 27, lines: 49..52, bytes: 1438..1486), hits: 1)
+-  runtime IC 1020 -> Item 31: Line (location: (source ID: 27, lines: 50..51, bytes: 1452..1475), hits: 1)
+-  runtime IC 1020 -> Item 32: Statement (location: (source ID: 27, lines: 50..51, bytes: 1452..1475), hits: 1)
+-  runtime IC 1070 -> Item 33: Line (location: (source ID: 27, lines: 52..53, bytes: 1495..1512), hits: 14)
+-  runtime IC 1070 -> Item 34: Statement (location: (source ID: 27, lines: 52..53, bytes: 1495..1512), hits: 14)
+-  runtime IC 559 -> Item 35: Line (location: (source ID: 27, lines: 60..66, bytes: 1736..1933), hits: 3)
+-  runtime IC 559 -> Item 36: Function "burn" (location: (source ID: 27, lines: 60..66, bytes: 1736..1933), hits: 3)
+-  runtime IC 1329 -> Item 37: Line (location: (source ID: 27, lines: 61..62, bytes: 1815..1841), hits: 3)
+-  runtime IC 1329 -> Item 38: Statement (location: (source ID: 27, lines: 61..62, bytes: 1815..1841), hits: 3)
+-  runtime IC 1329 -> Item 39: Statement (location: (source ID: 27, lines: 61..62, bytes: 1824..1841), hits: 3)
+-  runtime IC 1345 -> Item 40: Branch (branch: 2, path: 0) (location: (source ID: 27, lines: 61..64, bytes: 1843..1896), hits: 1)
+-  runtime IC 1345 -> Item 41: Line (location: (source ID: 27, lines: 62..63, bytes: 1857..1885), hits: 1)
+-  runtime IC 1345 -> Item 42: Statement (location: (source ID: 27, lines: 62..63, bytes: 1857..1885), hits: 1)
+-  runtime IC 1395 -> Item 43: Line (location: (source ID: 27, lines: 64..65, bytes: 1905..1926), hits: 2)
+-  runtime IC 1395 -> Item 44: Statement (location: (source ID: 27, lines: 64..65, bytes: 1905..1926), hits: 2)
+-  runtime IC 453 -> Item 45: Line (location: (source ID: 27, lines: 70..73, bytes: 2081..2215), hits: 7)
+-  runtime IC 453 -> Item 46: Function "approve_" (location: (source ID: 27, lines: 70..73, bytes: 2081..2215), hits: 7)
+-  runtime IC 1092 -> Item 47: Line (location: (source ID: 27, lines: 71..72, bytes: 2176..2208), hits: 7)
+-  runtime IC 1092 -> Item 48: Statement (location: (source ID: 27, lines: 71..72, bytes: 2176..2208), hits: 7)
+
+Anchors for Contract "DeployCarbonMarketplace" (solc 0.8.30, source ID 26):
+-  runtime IC 56 -> Item 0: Line (location: (source ID: 26, lines: 10..16, bytes: 282..496), hits: 2)
+-  runtime IC 56 -> Item 1: Function "run" (location: (source ID: 26, lines: 10..16, bytes: 282..496), hits: 2)
+-  runtime IC 139 -> Item 2: Line (location: (source ID: 26, lines: 11..12, bytes: 344..363), hits: 2)
+-  runtime IC 139 -> Item 3: Statement (location: (source ID: 26, lines: 11..12, bytes: 344..363), hits: 2)
+-  runtime IC 229 -> Item 4: Line (location: (source ID: 26, lines: 12..13, bytes: 373..433), hits: 2)
+-  runtime IC 229 -> Item 5: Statement (location: (source ID: 26, lines: 12..13, bytes: 373..433), hits: 2)
+-  runtime IC 230 -> Item 6: Statement (location: (source ID: 26, lines: 12..13, bytes: 405..433), hits: 2)
+-  runtime IC 336 -> Item 7: Line (location: (source ID: 26, lines: 13..14, bytes: 443..461), hits: 2)
+-  runtime IC 336 -> Item 8: Statement (location: (source ID: 26, lines: 13..14, bytes: 443..461), hits: 2)
+-  runtime IC 426 -> Item 9: Line (location: (source ID: 26, lines: 14..15, bytes: 471..489), hits: 2)
+-  runtime IC 426 -> Item 10: Statement (location: (source ID: 26, lines: 14..15, bytes: 471..489), hits: 2)
+
