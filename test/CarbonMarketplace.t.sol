@@ -279,7 +279,7 @@ contract CarbonMarketplaceTest is Test {
         assertEq(marketplace.getSellerProceeds(), 50e18);
     }
 
-    function testGetNextProjectIdStartsAtZero() public {
+    function testGetNextProjectIdStartsAtZero() public view {
         assertEq(marketplace.getNextProjectId(), 0);
     }
 
@@ -293,7 +293,7 @@ contract CarbonMarketplaceTest is Test {
         assertEq(marketplace.getNextProjectId(), 2);
     }
 
-    function testGetNextListingIdStartsAtZero() public {
+    function testGetNextListingIdStartsAtZero() public view {
         assertEq(marketplace.getNextListingId(), 0);
     }
 
@@ -307,7 +307,7 @@ contract CarbonMarketplaceTest is Test {
         vm.stopPrank();
     }
 
-    function testGetAllProjectsEmpty() public {
+    function testGetAllProjectsEmpty() public view {
         CarbonMarketplace.Project[] memory projects = marketplace.getAllProjects();
         assertEq(projects.length, 0);
     }
