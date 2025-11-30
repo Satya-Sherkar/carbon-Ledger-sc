@@ -93,8 +93,8 @@ contract CarbonMarketplace is Ownable {
     ///////////////////////////////////////////////////*/
     event AuditorAdded(address indexed auditor);
     event AuditorRemoved(address indexed auditor);
-    event ProjectRegistered(uint256 indexed projectId, address indexed owner);
-    event ProjectVerified(uint256 indexed id, uint256 indexed credits, address indexed auditor);
+    event ProjectRegistered(uint256 indexed projectId, address indexed owner, string indexed name);
+    event ProjectVerified(uint256 indexed id, uint256 indexed credits, address auditor, address indexed projectOwner);
     event CreditsListed(
         uint256 indexed listingId, address indexed seller, uint256 amount, uint256 indexed pricePerCredit
     );
@@ -141,7 +141,7 @@ contract CarbonMarketplace is Ownable {
         }
         projects[nextProjectId] =
             Project({projectId: nextProjectId, name: projectName, owner: projectOwner, isVerified: false, credits: 0});
-        emit ProjectRegistered(nextProjectId, projectOwner);
+        emit ProjectRegistered(nextProjectId, projectOwner, projectName);
         nextProjectId++;
     }
 
@@ -153,7 +153,7 @@ contract CarbonMarketplace is Ownable {
         project.credits = credits;
 
         CARBON_CREDIT_TOKEN.mint(project.owner, credits);
-        emit ProjectVerified(projectId, credits, msg.sender);
+        emit ProjectVerified(projectId, credits, msg.sender, project.owner);
     }
 
     // Functions for List/sell and buy credits
@@ -168,7 +168,7 @@ contract CarbonMarketplace is Ownable {
             revert InsufficientBalance();
         }
 
-        CARBON_CREDIT_TOKEN.approve_(msg.sender, address(this), creditAmount);
+        CARBON_CREDIT_TOKEN.approve(msg.sender, address(this), creditAmount);
         bool success = CARBON_CREDIT_TOKEN.transferFrom(msg.sender, address(this), creditAmount);
         if (!success) {
             revert TransferFailed();
