@@ -101,9 +101,9 @@ contract CarbonMarketplaceTest is Test {
 
         (,,, bool verified, uint256 credits) = marketplace.projects(0);
         assertTrue(verified);
-        assertEq(credits, 100);
+        assertEq(credits, 100e18);
 
-        assertEq(token.balanceOf(projectOwner), 100 * 1e18);
+        assertEq(token.balanceOf(projectOwner), 100e18);
 
         console.log(token.balanceOf(projectOwner));
         console.log(token.totalSupply());
@@ -175,7 +175,7 @@ contract CarbonMarketplaceTest is Test {
         vm.prank(buyer);
         marketplace.buyTokens{value: 50e18}(0);
 
-        assertEq(token.balanceOf(buyer), 50);
+        assertEq(token.balanceOf(buyer), 50e18);
         assertEq(marketplace.sellerProceeds(projectOwner), 50e18);
     }
 
@@ -220,6 +220,7 @@ contract CarbonMarketplaceTest is Test {
         marketplace.retireCredit(200);
     }
 
+    // TODO: Check later for accuracy
     function testGetAllListingReturnsAllListings() public projectListed {
         // Create second project and listing
         vm.prank(user);
@@ -238,15 +239,15 @@ contract CarbonMarketplaceTest is Test {
         assertEq(allListings.length, 2);
 
         // Verify first listing details
-        assertEq(allListings[0].credits, 50);
+        assertEq(allListings[0].credits, 50e18);
         assertEq(allListings[0].seller, projectOwner);
-        assertEq(allListings[0].pricePerCredit, 1e18);
+        assertEq(allListings[0].pricePerCredit, 1);
         assertTrue(allListings[0].isActive);
 
         // Verify second listing details
-        assertEq(allListings[1].credits, 30);
+        assertEq(allListings[1].credits, 30e18);
         assertEq(allListings[1].seller, user);
-        assertEq(allListings[1].pricePerCredit, 2e18);
+        assertEq(allListings[1].pricePerCredit, 2);
         assertTrue(allListings[1].isActive);
     }
 
