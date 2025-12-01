@@ -110,13 +110,17 @@ contract CarbonMarketplace is Ownable {
         if (project.isVerified) revert ProjectAlreadyVerified();
 
         project.isVerified = true;
-        project.credits = credits;
+        project.credits = credits * 1e18;
 
         CARBON_CREDIT_TOKEN.mint(project.owner, credits);
-        emit ProjectVerified(projectId, credits, msg.sender, project.owner);
+        emit ProjectVerified(projectId, credits * 1e18, msg.sender, project.owner);
     }
 
     // Functions for List/sell and buy credits
+    /**
+     * @param creditAmount as whole credit
+     * @param pricePerCredit in wei
+     */
     function listCreditsForSell(uint256 creditAmount, uint256 pricePerCredit) external {
         if (creditAmount == 0) {
             revert InvalidAmount();
@@ -124,18 +128,18 @@ contract CarbonMarketplace is Ownable {
         if (pricePerCredit == 0) {
             revert InvalidPrice();
         }
-        if (CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < creditAmount) {
+        if (CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < creditAmount * 1e18) {
             revert InsufficientBalance();
         }
 
-        CARBON_CREDIT_TOKEN.approve(msg.sender, address(this), creditAmount);
-        bool success = CARBON_CREDIT_TOKEN.transferFrom(msg.sender, address(this), creditAmount);
+        CARBON_CREDIT_TOKEN.approve(msg.sender, address(this), creditAmount * 1e18);
+        bool success = CARBON_CREDIT_TOKEN.transferFrom(msg.sender, address(this), creditAmount * 1e18);
         if (!success) {
             revert TransferFailed();
         }
 
         listings[nextListingId] =
-            Listing({credits: creditAmount, seller: msg.sender, pricePerCredit: pricePerCredit * 1e18, isActive: true});
+            Listing({credits: creditAmount * 1e18, seller: msg.sender, pricePerCredit: pricePerCredit, isActive: true});
 
         emit CreditsListed(nextListingId, msg.sender, creditAmount, pricePerCredit);
         nextListingId++;
