@@ -140,16 +140,16 @@ contract CarbonMarketplaceTest is Test {
 
         // User lists credits for sale
         vm.prank(user);
-        marketplace.listCreditsForSell(50, 1);
+        marketplace.listCreditsForSell(50, 1 * 1e18);
 
         (uint256 credits, address seller, uint256 pricePerCredit, bool isActive) = marketplace.listings(0);
 
-        assertEq(credits, 50);
+        assertEq(credits, 50 * 1e18);
         assertEq(seller, address(user));
         assertEq(pricePerCredit, 1e18);
         assertTrue(isActive);
 
-        assertEq(token.balanceOf(address(marketplace)), 50);
+        assertEq(token.balanceOf(address(marketplace)), 50 * 1e18);
     }
 
     function testListingFailsWithInvalidAmount() public tokenMinted {
