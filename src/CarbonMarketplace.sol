@@ -4,49 +4,32 @@ pragma solidity ^0.8.30;
 import {CarbonCreditToken} from "./CarbonCreditToken.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
+// Errors
+error NotAuditor();
+error ProjectAlreadyVerified();
+error InvalidAddress();
+error InsufficientBalance();
+error InvalidAmount();
+error InvalidPrice();
+error CreditSellingInactive();
+error InsufficientPayment();
+error NoProceedsToWithdraw();
+error WithdrawFailed();
+error TransferFailed();
+error InvalidOwener();
+
 /**
  * @title Carbon Credit Marketplace Test Contract
  * @author Satyam Sherkar
  * @notice This is Test contract.
  */
 contract CarbonMarketplace is Ownable {
-    /*////////////////////////////////////////////////////
-                            Errors
-    ///////////////////////////////////////////////////*/
-    error NotAuditor();
-    error ProjectAlreadyVerified();
-    error InvalidAddress();
-    error InsufficientBalance();
-    error InvalidAmount();
-    error InvalidPrice();
-    error CreditSellingInactive();
-    error InsufficientPayment();
-    error NoProceedsToWithdraw();
-    error WithdrawFailed();
-    error TransferFailed();
-    error InvalidOwener();
-
-    /*////////////////////////////////////////////////////
-                            Immutable
-    ///////////////////////////////////////////////////*/
     CarbonCreditToken public immutable CARBON_CREDIT_TOKEN;
 
-    /*////////////////////////////////////////////////////
-                            Constructor
-    ///////////////////////////////////////////////////*/
-
-    /**
-     *
-     * @param admin is set as owner of this marketplace contract..
-     * @notice Owner of CarbonCreditToken is initialized as this contract(Marketplace).
-     */
     constructor(address admin) Ownable(admin) {
         CARBON_CREDIT_TOKEN = new CarbonCreditToken(address(this));
     }
 
-    /*////////////////////////////////////////////////////
-                         Type Declarations
-    ///////////////////////////////////////////////////*/
     struct Project {
         uint256 projectId;
         string name;
@@ -62,35 +45,17 @@ contract CarbonMarketplace is Ownable {
         bool isActive;
     }
 
-    /*////////////////////////////////////////////////////
-                    Mappings and variables
-    ///////////////////////////////////////////////////*/
-
-    /**
-     * @notice This mapping maps Project Id to Project
-     */
     mapping(uint256 => Project) public projects;
     uint256 public nextProjectId;
 
-    /**
-     * @notice This mapping maps auditor address to boolean.
-     */
     mapping(address => bool) public auditors;
 
-    /**
-     * @notice This mapping maps Listing to Listing Id.
-     */
     mapping(uint256 => Listing) public listings;
     uint256 public nextListingId;
 
-    /**
-     * @notice This mapping maps seller address to his proceeds(amount he can withdraw).
-     */
     mapping(address => uint256) public sellerProceeds;
 
-    /*////////////////////////////////////////////////////
-                            Events
-    ///////////////////////////////////////////////////*/
+    // Events
     event AuditorAdded(address indexed auditor);
     event AuditorRemoved(address indexed auditor);
     event ProjectRegistered(uint256 indexed projectId, address indexed owner, string indexed name);
@@ -104,9 +69,7 @@ contract CarbonMarketplace is Ownable {
     event ProceedsWithdrawn(address indexed seller, uint256 indexed amount);
     event CreditsRetired(address indexed creditHolder, uint256 indexed retiredCreditAmount);
 
-    /*////////////////////////////////////////////////////
-                            Modifiers
-    ///////////////////////////////////////////////////*/
+    // Modifiers
     modifier onlyAuditor() {
         _onlyAuditor();
         _;
@@ -118,9 +81,6 @@ contract CarbonMarketplace is Ownable {
         }
     }
 
-    /*////////////////////////////////////////////////////
-                     Functions
-    ///////////////////////////////////////////////////*/
     function addAuditor(address auditor) external onlyOwner {
         auditors[auditor] = true;
         emit AuditorAdded(auditor);
@@ -266,10 +226,7 @@ contract CarbonMarketplace is Ownable {
         if (!callSuccess) revert WithdrawFailed();
     }
 
-    /*////////////////////////////////////////////////////
-                    Getter Functions
-    ///////////////////////////////////////////////////*/
-
+    // Getter functions
     function getAllListings() external view returns (Listing[] memory) {
         Listing[] memory allListings = new Listing[](nextListingId);
 
