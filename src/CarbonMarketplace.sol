@@ -193,13 +193,16 @@ contract CarbonMarketplace is Ownable {
         if (!success) {
             revert TransferFailed();
         }
-        sellerProceeds[listing.seller] += msg.value;
+        sellerProceeds[listing.seller] += totalPrice;
 
         listing.isActive = false;
 
         // Refund excess payment
         if (msg.value > totalPrice) {
-            payable(msg.sender).transfer(msg.value - totalPrice);
+            (bool refundSuccess,) = payable(msg.sender).call{value: msg.value - totalPrice}("");
+            if (!refundSuccess) {
+                revert WithdrawFailed();
+            }
         }
 
         emit CreditsPurchased(listingId, msg.sender, listing.seller, listing.credits, totalPrice);
