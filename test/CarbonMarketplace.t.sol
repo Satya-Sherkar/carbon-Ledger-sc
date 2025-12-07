@@ -93,9 +93,6 @@ contract CarbonMarketplaceTest is Test {
         vm.prank(projectOwner);
         marketplace.registerProject("Project Y", projectOwner);
 
-        vm.prank(owner);
-        marketplace.addAuditor(auditor);
-
         vm.prank(auditor);
         marketplace.verifyProject(0, 100);
 
@@ -112,9 +109,6 @@ contract CarbonMarketplaceTest is Test {
     function testDoubleVerificationFails() public {
         vm.prank(projectOwner);
         marketplace.registerProject("Project Y", projectOwner);
-
-        vm.prank(owner);
-        marketplace.addAuditor(auditor);
 
         vm.startPrank(auditor);
         marketplace.verifyProject(0, 100);
@@ -203,16 +197,16 @@ contract CarbonMarketplaceTest is Test {
         assertEq(owner.balance, 100);
     }
 
-    // function testRetireCredit() public projectListed {
-    //     vm.deal(buyer, 100 ether);
-    //     vm.prank(buyer);
-    //     marketplace.buyTokens{value: 50e18}(0);
+    function testRetireCredit() public projectListed {
+        vm.deal(buyer, 100 ether);
+        vm.prank(buyer);
+        marketplace.buyTokens{value: 50e18}(0);
 
-    //     vm.prank(buyer);
-    //     marketplace.retireCredit(50);
+        vm.prank(buyer);
+        marketplace.retireCredit(50);
 
-    //     assertEq(token.balanceOf(buyer), 0);
-    // }
+        assertEq(token.balanceOf(buyer), 0);
+    }
 
     function testRetireFailsWithInvalidBalance() public {
         vm.prank(user);
