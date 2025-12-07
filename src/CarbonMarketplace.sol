@@ -3,6 +3,7 @@ pragma solidity ^0.8.30;
 
 import {CarbonCreditToken} from "./CarbonCreditToken.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 // Errors
 error NotAuditor();
@@ -23,7 +24,7 @@ error InvalidOwener();
  * @author Satyam Sherkar
  * @notice This is Test contract.
  */
-contract CarbonMarketplace is Ownable {
+contract CarbonMarketplace is Ownable, ReentrancyGuard {
     CarbonCreditToken public immutable CARBON_CREDIT_TOKEN;
 
     constructor(address admin) Ownable(admin) {
@@ -121,7 +122,7 @@ contract CarbonMarketplace is Ownable {
      * @param creditAmount as whole credit
      * @param pricePerCredit in wei
      */
-    function listCreditsForSell(uint256 creditAmount, uint256 pricePerCredit) external {
+    function listCreditsForSell(uint256 creditAmount, uint256 pricePerCredit) external nonReentrant {
         if (creditAmount == 0) {
             revert InvalidAmount();
         }
@@ -177,7 +178,7 @@ contract CarbonMarketplace is Ownable {
         listing.pricePerCredit = 0;
     }
 
-    function buyTokens(uint256 listingId) external payable {
+    function buyTokens(uint256 listingId) external payable nonReentrant {
         Listing storage listing = listings[listingId];
         if (!listing.isActive) {
             revert CreditSellingInactive();
@@ -208,7 +209,7 @@ contract CarbonMarketplace is Ownable {
         emit CreditsPurchased(listingId, msg.sender, listing.seller, listing.credits, totalPrice);
     }
 
-    function withdrawProceeds() external {
+    function withdrawProceeds() external nonReentrant {
         uint256 proceeds = sellerProceeds[msg.sender];
         if (proceeds == 0) revert NoProceedsToWithdraw();
 
@@ -219,7 +220,7 @@ contract CarbonMarketplace is Ownable {
         emit ProceedsWithdrawn(msg.sender, proceeds);
     }
 
-    function retireCredit(uint256 amount) external {
+    function retireCredit(uint256 amount) external nonReentrant {
         if (CARBON_CREDIT_TOKEN.balanceOf(msg.sender) < amount) {
             revert InsufficientBalance();
         }
@@ -228,7 +229,7 @@ contract CarbonMarketplace is Ownable {
         emit CreditsRetired(msg.sender, amount);
     }
 
-    function withdrawCharges() external onlyOwner {
+    function withdrawCharges() external onlyOwner nonReentrant {
         (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         if (!callSuccess) revert WithdrawFailed();
     }
