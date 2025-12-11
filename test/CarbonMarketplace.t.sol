@@ -171,6 +171,7 @@ contract CarbonMarketplaceTest is Test {
 
         assertEq(token.balanceOf(buyer), 50e18);
         assertEq(marketplace.sellerProceeds(projectOwner), 50e18);
+        assertEq(token.balanceOf(address(marketplace)), 0);
     }
 
     function testWitdrawProceeds() public projectListed {
