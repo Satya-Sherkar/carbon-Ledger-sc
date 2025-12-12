@@ -178,13 +178,18 @@ contract CarbonMarketplace is Ownable, ReentrancyGuard {
         listing.pricePerCredit = 0;
     }
 
+    function totalPriceCalculator(uint256 listingId) public view returns (uint256) {
+        Listing storage listing = listings[listingId];
+        return listing.credits * listing.pricePerCredit;
+    }
+
     function buyTokens(uint256 listingId) external payable nonReentrant {
         Listing storage listing = listings[listingId];
         if (!listing.isActive) {
             revert CreditSellingInactive();
         }
 
-        uint256 totalPrice = listing.credits * listing.pricePerCredit;
+        uint256 totalPrice = totalPriceCalculator(listingId);
         if (msg.value < totalPrice) {
             revert InsufficientPayment();
         }
