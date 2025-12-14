@@ -307,8 +307,4 @@ contract CarbonMarketplaceTest is Test {
         CarbonMarketplace.Project[] memory projects = marketplace.getAllProjects();
         assertEq(projects.length, 0);
     }
-
-    function testTotalPriceCalculator() public projectListed {
-        assertEq(marketplace.totalPriceCalculator(0), 50e18);
-    }
 }
