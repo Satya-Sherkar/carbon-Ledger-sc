@@ -6,4 +6,9 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CarbonNFT is ERC721, Ownable {
     constructor(address owner) ERC721("Retired Credits", "RCCT") Ownable(owner) {}
+
+    uint256 private _tokenIdCounter;
+    mapping(uint256 => string) private _tokenUris;
+
+    //TODO: Implement a NFT for Carbon retired credits.
 }
